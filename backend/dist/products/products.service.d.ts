@@ -1,0 +1,62 @@
+import { PrismaService } from '../prisma/prisma.service';
+export declare class ProductsService {
+    private readonly prisma;
+    constructor(prisma: PrismaService);
+    list(storeId?: string): Promise<{
+        description: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        storeId: string;
+        brand: string;
+        sku: string;
+        category: string;
+        unit: string;
+        price: number;
+        stock: number;
+        reservedStock: number;
+        minStockAlert: number;
+        imageUrl: string | null;
+        status: string;
+        isActive: boolean;
+    }[]>;
+    create(user: any, body: any): Promise<{
+        description: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        storeId: string;
+        brand: string;
+        sku: string;
+        category: string;
+        unit: string;
+        price: number;
+        stock: number;
+        reservedStock: number;
+        minStockAlert: number;
+        imageUrl: string | null;
+        status: string;
+        isActive: boolean;
+    }>;
+    update(id: string, body: any): Promise<{
+        description: string | null;
+        id: string;
+        createdAt: Date;
+        updatedAt: Date;
+        name: string;
+        storeId: string;
+        brand: string;
+        sku: string;
+        category: string;
+        unit: string;
+        price: number;
+        stock: number;
+        reservedStock: number;
+        minStockAlert: number;
+        imageUrl: string | null;
+        status: string;
+        isActive: boolean;
+    }>;
+}

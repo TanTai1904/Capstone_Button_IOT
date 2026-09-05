@@ -4,6 +4,12 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
+  const userCount = await prisma.user.count().catch(() => 0);
+  if (userCount > 0 && process.env.FORCE_SEED !== 'true') {
+    console.log(`ℹ️ Database already initialized (${userCount} users found). Skipping seed to preserve data.`);
+    return;
+  }
+
   console.log('🌱 Clearing existing database tables...');
   await prisma.auditLog.deleteMany();
   await prisma.idempotencyRecord.deleteMany();

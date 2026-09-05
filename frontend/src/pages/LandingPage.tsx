@@ -5,8 +5,10 @@ import confetti from 'canvas-confetti';
 import { Interactive3DButton } from '../components/3d/Interactive3DButton';
 import { Floating3DCard } from '../components/3d/Floating3DCard';
 import { NetworkSignalFlow } from '../components/3d/NetworkSignalFlow';
+import { useTheme } from '../context/ThemeContext';
 
 export const LandingPage: React.FC = () => {
+  const { theme } = useTheme();
   const [buttonPressed, setButtonPressed] = useState(false);
   const [ledState, setLedState] = useState<'off' | 'blue' | 'yellow' | 'green'>('off');
   const [telemetryStage, setTelemetryStage] = useState<string>('ESP32 Deep Sleep (<15µA)');
