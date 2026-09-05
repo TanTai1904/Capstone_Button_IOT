@@ -19,7 +19,7 @@ Tài liệu này tổng hợp chi tiết toàn bộ các trang, phân hệ, tín
 | **Khách Hàng** | `/customer/home` | `CUSTOMER` | Xem danh sách nút bấm sở hữu, Đổi Wi-Fi, Chuyển nhượng |
 | **Quản Trị Hệ Thống** | `/admin/dashboard` | `SUPER_ADMIN` | Quản trị toàn sàn, duyệt cửa hàng, tổng hợp giao dịch |
 | **Trung Tâm An Ninh** | `/admin/security/devices` | `SUPER_ADMIN`, `TECHNICIAN` | Giám sát tấn công Replay, kiểm tra khóa bí mật HMAC |
-| **Mô Phỏng Phần Cứng** | `/simulator` | Công khai / Toàn quyền | Bàn thử nghiệm ESP32 Simulator với 10 lệnh phần cứng |
+| **Cài Đặt Wi-Fi Nhanh** | `/quick-setup` | Công khai / Toàn quyền | Giao diện cấu hình Wi-Fi cho nút bấm 1-chạm không cần đăng nhập |
 
 ---
 
@@ -135,27 +135,11 @@ Tài liệu này tổng hợp chi tiết toàn bộ các trang, phân hệ, tín
 
 ---
 
-### 2.6. Phân Hệ Mô Phỏng Phần Cứng (ESP32 Hardware Simulator Bridge) (`/simulator`)
-Đây là công cụ phòng lab mạnh mẽ cho phép chạy thử nghiệm và nghiệm thu toàn bộ hoạt động của vi điều khiển ESP32 ngay trên trình duyệt:
-* **Nút bấm phần cứng 3D có phản hồi cơ học:**
-  * Hiệu ứng đèn LED viền tròn (LED Halo):
-    * 🟣 *Tím*: Đang phát BLE / SoftAP chờ cấu hình Wi-Fi.
-    * 🟡 *Vàng nhấp nháy*: Đang kết nối router và gọi Cloud.
-    * 🟢 *Xanh lá*: Đặt hàng thành công! (Bắn pháo hoa Confetti chúc mừng).
-    * 🔴 *Đỏ*: Có lỗi (Mất mạng, hết hàng hoặc sai chữ ký).
-* **Đầy đủ 10 lệnh điều khiển phần cứng (Section 52 Spec):**
-  1. `[1] Single Press`: Bấm 1 lần để tạo đơn hàng có chữ ký HMAC-SHA256.
-  2. `[2] Double Press`: Nhấn đúp trong 60 giây để hủy đơn và hoàn kho.
-  3. `[3] Bật Provisioning`: Bật BLE GATT & SoftAP 192.168.4.1.
-  4. `[4] Nạp Wi-Fi`: Nạp tên Wi-Fi và mật khẩu vào bộ nhớ NVS Flash.
-  5. `[5] Bootstrap Cloud`: Bắn gói tin xác thực phần cứng lên máy chủ.
-  6. `[6] Mô phỏng Offline`: Thử nghiệm ngắt kết nối mạng router.
-  7. `[7] Factory Reset`: Giữ 15s xóa Wi-Fi, giữ nguyên định danh Device ID.
-  8. `[8] Show Telemetry`: Hiển thị pin, điện áp mV, RSSI.
-  9. `[9] Device State`: Xem trạng thái máy trạng thái vi điều khiển (State Machine).
-  10. `[0] Long Press`: Giữ nút 10 giây hoặc 15 giây.
-* **Màn hình UART Serial Monitor (115200 Baud):** Hiển thị log ngắt vi điều khiển, chu kỳ thức dậy từ chế độ ngủ sâu (Deep Sleep RTC Wakeup) và các phản hồi mạng.
-* **Trình soi gói tin (Packet Inspector):** Hiển thị trực quan Payload và chữ ký mã hóa `HMAC_SHA256(Secret, DeviceId:Timestamp:Nonce:Body)`.
+### 2.6. Phân Hệ Cài Đặt Nhanh Wi-Fi Nút Bấm (`/quick-setup`)
+Đây là giao diện công khai cho phép khách hàng cấu hình lại Wi-Fi cho nút bấm vật lý mà không cần phải đăng nhập tài khoản:
+* **Nhập mã PIN định danh thiết bị**: Điền 6 ký tự PIN in trên tem nút bấm.
+* **Cấu hình thông tin mạng**: Nhập tên mạng Wi-Fi (SSID) và mật khẩu nhà khách hàng.
+* **Bảo toàn 100% dữ liệu**: Giữ nguyên quyền sở hữu và sản phẩm gán cho nút, nút lập tức kết nối mạng mới và sẵn sàng nhận lệnh.
 
 ---
 
@@ -182,6 +166,4 @@ Tài liệu này tổng hợp chi tiết toàn bộ các trang, phân hệ, tín
    * Vào menu **"Thiết bị"** (`/store/devices`): Trải nghiệm tạo nút bấm mới, xem tem QR và đổi sản phẩm gán.
    * Vào menu **"Bảng điều khiển"** (`/store/dashboard`): Đón nhận chuông báo đơn hàng realtime.
 3. **Thử nghiệm vai trò Khách Hàng:**
-   * Chọn **"Đăng nhập: Khách Hàng"** (`/customer/home`): Xem danh sách nút bấm gia đình, bấm thử đặt hàng ảo.
-4. **Thử nghiệm mô phỏng phần cứng:**
-   * Bấm vào tab **"ESP32 Simulator"** (`/simulator`): Trải nghiệm 10 lệnh phần cứng và bấm nút tạo đơn hàng trực tiếp lên Cửa hàng!
+   * Chọn **"Đăng nhập: Khách Hàng"** (`/customer/home`): Xem danh sách nút bấm gia đình, bấm thử đặt hàng 1-chạm.

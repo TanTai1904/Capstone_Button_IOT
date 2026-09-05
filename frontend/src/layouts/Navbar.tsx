@@ -59,16 +59,6 @@ export const Navbar: React.FC = () => {
             <span>Cài Wi-Fi Nút Bấm</span>
           </Link>
 
-          {/* Hardware Simulator Bridge Shortcut */}
-          <Link
-            to="/simulator"
-            className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold text-slate-800 dark:text-slate-200 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 dark:hover:text-red-400 border border-slate-200/80 dark:border-red-500/25 rounded-xl transition-all shadow-sm hover:shadow"
-            title="Mở bảng điều khiển mô phỏng nút bấm ESP32"
-          >
-            <Cpu className="w-3.5 h-3.5 text-blue-600 dark:text-red-400" />
-            <span className="hidden sm:inline">ESP32 Simulator</span>
-          </Link>
-
           {/* Light / Dark Mode Toggle */}
           <button
             onClick={toggleTheme}

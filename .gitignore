@@ -11,11 +11,15 @@ node_modules/
 
 # Build outputs & caches
 dist/
+**/dist/
 build/
+**/build/
 out/
 .next/
 .cache/
 *.local
+.dart_tool/
+**/.dart_tool/
 
 # Database & SQLite
 *.db

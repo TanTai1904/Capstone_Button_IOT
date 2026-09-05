@@ -121,13 +121,6 @@ export const LandingPage: React.FC = () => {
                   <ArrowRight className="w-4 h-4 ml-1" />
                 </Link>
                 <Link
-                  to="/simulator"
-                  className="px-6 py-3.5 rounded-xl bg-white hover:bg-blue-50/70 dark:bg-zinc-900 dark:hover:bg-zinc-800 border border-slate-200/90 dark:border-red-500/30 text-slate-800 hover:text-blue-600 dark:text-red-400 font-bold text-sm shadow-sm transition-all flex items-center space-x-2.5 btn-press"
-                >
-                  <Cpu className="w-4 h-4 text-blue-600 dark:text-red-400" />
-                  <span>ESP32 Simulator</span>
-                </Link>
-                <Link
                   to="/register"
                   className="px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-800 dark:text-zinc-200 font-bold text-sm border border-slate-200 dark:border-red-500/20 shadow-sm transition-all"
                 >
@@ -377,10 +370,10 @@ export const LandingPage: React.FC = () => {
           </p>
           <div className="pt-4 flex flex-wrap justify-center gap-3">
             <Link
-              to="/simulator"
+              to="/quick-setup"
               className="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white dark:bg-gradient-to-r dark:from-red-600 dark:via-red-500 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 dark:text-white text-xs font-bold transition-all shadow-md shadow-blue-500/20 dark:shadow-red-600/30 btn-press"
             >
-              Mở ESP32 Simulator
+              Cài Wi-Fi Nút Bấm
             </Link>
             <Link
               to="/login"

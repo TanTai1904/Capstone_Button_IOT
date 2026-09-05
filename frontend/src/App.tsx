@@ -16,7 +16,6 @@ import { StoreProductsPage } from './pages/store/StoreProductsPage';
 import { CustomerHomePage } from './pages/customer/CustomerHomePage';
 import { AdminDashboard } from './pages/admin/AdminDashboard';
 import { AdminSecurityHubPage } from './pages/admin/AdminSecurityHubPage';
-import { SimulatorBridgePage } from './pages/devices/SimulatorBridgePage';
 import { QuickSetupPage } from './pages/QuickSetupPage';
 import { useAuth } from './context/AuthContext';
 import { Atmosphere3DBackground, AtmosphereVariant } from './components/3d/Atmosphere3DBackground';
@@ -93,7 +92,6 @@ export const App: React.FC = () => {
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
           <Route path="/403" element={<ForbiddenPage />} />
-          <Route path="/simulator" element={<SimulatorBridgePage />} />
 
           {/* Store Routes */}
           <Route
