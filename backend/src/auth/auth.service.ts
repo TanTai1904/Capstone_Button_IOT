@@ -200,15 +200,28 @@ export class AuthService {
     }
 
     // Lookup user by email OR username
-    const user = await this.prisma.user.findFirst({
-      where: {
-        OR: [{ email: rawIdentifier }, { username: rawIdentifier }],
-      },
-      include: {
-        store: true,
-        customerProfile: true,
-      },
-    });
+    let user;
+    try {
+      user = await this.prisma.user.findFirst({
+        where: {
+          OR: [{ email: rawIdentifier }, { username: rawIdentifier }],
+        },
+        include: {
+          store: true,
+          customerProfile: true,
+        },
+      });
+    } catch (err: any) {
+      console.error('❌ [AuthService.login] Database error:', err);
+      throw new HttpException(
+        {
+          success: false,
+          code: 'DATABASE_ERROR',
+          message: `Lỗi kết nối cơ sở dữ liệu: ${err.message || 'Không thể truy vấn bảng User'}`,
+        },
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
 
     // Anti-enumeration generic error
     if (!user) {

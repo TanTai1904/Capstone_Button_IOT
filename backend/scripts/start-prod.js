@@ -4,7 +4,10 @@ const path = require('path');
 console.log('🔄 Checking database environment...');
 const dbUrl = process.env.DATABASE_URL || '';
 
-if (dbUrl.startsWith('postgres://') || dbUrl.startsWith('postgresql://')) {
+if (!dbUrl) {
+  console.warn('⚠️ [CRITICAL] DATABASE_URL is NOT SET in Environment Variables!');
+  console.warn('⚠️ Please add DATABASE_URL (Neon PostgreSQL connection string) in Render Dashboard -> Environment.');
+} else if (dbUrl.startsWith('postgres://') || dbUrl.startsWith('postgresql://')) {
   console.log('🐘 PostgreSQL detected (Neon / Production). Synchronizing schema...');
   try {
     execSync('npx prisma db push --schema=prisma/schema.postgresql.prisma --accept-data-loss', {

@@ -12,11 +12,29 @@ export class AppController {
   ) {}
 
   @Get('health')
-  getHealth() {
+  async getHealth() {
+    let dbStatus = 'UNKNOWN';
+    let dbError = null;
+    let userCount = -1;
+    try {
+      userCount = await this.prisma.user.count();
+      dbStatus = 'CONNECTED';
+    } catch (err: any) {
+      dbStatus = 'ERROR';
+      dbError = err.message;
+    }
+
     return {
       status: 'OK',
       timestamp: new Date().toISOString(),
       service: 'NestJS Smart Order Backend',
+      database: {
+        status: dbStatus,
+        userCount,
+        error: dbError,
+        dbType: process.env.DATABASE_URL?.startsWith('postgres') ? 'PostgreSQL' : 'SQLite/Other',
+        dbUrlConfigured: !!process.env.DATABASE_URL,
+      },
     };
   }
 
