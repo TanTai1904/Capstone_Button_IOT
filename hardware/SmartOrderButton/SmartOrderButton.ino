@@ -26,6 +26,7 @@
 #include <WiFi.h>
 #include <Preferences.h>
 #include <HTTPClient.h>
+#include <WiFiClientSecure.h>
 #include <mbedtls/md.h>
 
 // =========================================================================================
@@ -63,9 +64,12 @@ const char* PAIRING_PIN   = "882910"; // Mã số kết nối 6 chữ số (Dùn
 const char* CLAIM_CODE    = "CLAIM-749201";
 const char* DEVICE_SECRET = "sec_smart_button_8829_wtr_key_99";
 const char* FIRMWARE_VER  = "4.2.0";
-const char* CLOUD_URL     = "http://192.168.1.100:5000"; // Địa chỉ Cloud Backend (IP LAN máy tính)
 
-// Bộ nhớ NVS Flash lưu thông số Wi-Fi
+// Địa chỉ Cloud Backend (Mặc định là Render Cloud URL)
+const char* DEFAULT_CLOUD_URL = "https://capstone-button-iot.onrender.com";
+String cloudUrl = DEFAULT_CLOUD_URL;
+
+// Bộ nhớ NVS Flash lưu thông số Wi-Fi & Cloud URL
 Preferences prefs;
 String savedSsid = "";
 String savedPass = "";
@@ -133,8 +137,21 @@ bool bootstrapCloud() {
   if (WiFi.status() != WL_CONNECTED) return false;
 
   HTTPClient http;
-  String url = String(CLOUD_URL) + "/api/devices/bootstrap";
-  http.begin(url);
+  String url = cloudUrl + "/api/devices/bootstrap";
+
+  WiFiClientSecure *secureClient = nullptr;
+  if (url.startsWith("https://")) {
+    secureClient = new WiFiClientSecure();
+    if (secureClient) {
+      secureClient->setInsecure();
+      http.begin(*secureClient, url);
+    } else {
+      http.begin(url);
+    }
+  } else {
+    http.begin(url);
+  }
+
   http.addHeader("Content-Type", "application/json");
 
   time_t now = time(nullptr);
@@ -160,6 +177,7 @@ bool bootstrapCloud() {
   Serial.println(httpCode);
 
   http.end();
+  if (secureClient) delete secureClient;
   return (httpCode == 200 || httpCode == 201);
 }
 
@@ -173,8 +191,21 @@ void sendButtonEvent(const char* eventType) {
   }
 
   HTTPClient http;
-  String url = String(CLOUD_URL) + "/api/iot/events";
-  http.begin(url);
+  String url = cloudUrl + "/api/iot/events";
+
+  WiFiClientSecure *secureClient = nullptr;
+  if (url.startsWith("https://")) {
+    secureClient = new WiFiClientSecure();
+    if (secureClient) {
+      secureClient->setInsecure();
+      http.begin(*secureClient, url);
+    } else {
+      http.begin(url);
+    }
+  } else {
+    http.begin(url);
+  }
+
   http.addHeader("Content-Type", "application/json");
 
   time_t now = time(nullptr);
@@ -198,12 +229,14 @@ void sendButtonEvent(const char* eventType) {
   int httpCode = http.POST(body);
   Serial.print("[EVENT] Gửi sự kiện ");
   Serial.print(eventType);
+  Serial.print(" tới ");
+  Serial.print(url);
   Serial.print(" -> HTTP: ");
   Serial.println(httpCode);
 
   if (httpCode == 200 || httpCode == 201) {
-    if (strcmp(eventType, "SINGLE_PRESS") == 0) {
-      blinkLED(3, 100, 100); // 3 chớp ngắn = Đơn hàng thành công
+    if (strcmp(eventType, "SINGLE_PRESS") == 0 || strcmp(eventType, "WAKEUP") == 0) {
+      blinkLED(3, 100, 100); // 3 chớp ngắn = Đơn hàng / Kích hoạt thành công
     } else {
       blinkLED(2, 400, 200); // 2 chớp dài = Hủy đơn thành công
     }
@@ -211,6 +244,7 @@ void sendButtonEvent(const char* eventType) {
     blinkLED(6, 60, 60); // Báo lỗi
   }
   http.end();
+  if (secureClient) delete secureClient;
 }
 
 // =========================================================================================
@@ -250,6 +284,7 @@ void printHardwareIdentityBanner() {
   Serial.print(F("🔑 MÃ SỐ KẾT NỐI (PIN 6 SỐ):       ")); Serial.println(PAIRING_PIN);
   Serial.print(F("🏷️ MÃ TEM XÁC THỰC (CLAIM CODE):    ")); Serial.println(CLAIM_CODE);
   Serial.print(F("⚡ PHIÊN BẢN FIRMWARE:             v")); Serial.println(FIRMWARE_VER);
+  Serial.print(F("🌐 ĐỊA CHỈ CLOUD BACKEND:         ")); Serial.println(cloudUrl);
   Serial.println(F("--------------------------------------------------------------------------"));
   Serial.println(F("📲 HƯỚNG DẪN CẤU HÌNH VÀO MÁY (KHÔNG CẦN ĐỊA CHỈ MAC):"));
   Serial.print(F("  1. Cách 1: Trên Web/App điện thoại, nhập mã 6 số: ")); Serial.println(PAIRING_PIN);
@@ -693,14 +728,15 @@ void setup() {
   pinMode(LED_PIN, OUTPUT);
   digitalWrite(LED_PIN, LOW);
 
-  // In mã số thiết bị, PIN 6 số và ASCII QR Code ra Serial Monitor
-  printHardwareIdentityBanner();
-
-  // Đọc cấu hình Wi-Fi từ NVS Flash
+  // Đọc cấu hình Wi-Fi & Cloud URL từ NVS Flash
   prefs.begin("wifi_cfg", true);
   savedSsid = prefs.getString("ssid", "");
   savedPass = prefs.getString("password", "");
+  cloudUrl  = prefs.getString("cloud_url", DEFAULT_CLOUD_URL);
   prefs.end();
+
+  // In mã số thiết bị, PIN 6 số, Cloud URL và ASCII QR Code ra Serial Monitor
+  printHardwareIdentityBanner();
 
   if (savedSsid == "") {
     Serial.println("[BOOT] Chua co Wi-Fi. Chuyen sang Provisioning Mode.");
@@ -720,7 +756,7 @@ void setup() {
 
     if (WiFi.status() == WL_CONNECTED) {
       Serial.println("\n[BOOT] Ket noi Wi-Fi thanh cong!");
-      configTime(7 * 3600, 0, "pool.ntp.org", "time.google.com");
+      configTime(7 * 3600, 0, "pool.ntp.org", "time.google.com", "time.cloudflare.com");
       blinkLED(2, 100, 100);
       bootstrapCloud();
     } else {
@@ -844,6 +880,18 @@ void loop() {
         blinkLED(3, 100, 100);
         delay(1000);
         ESP.restart();
+      }
+    } else if (line.startsWith("URL:") || line.startsWith("CLOUD:")) {
+      int firstSep = line.indexOf(':');
+      String newUrl = line.substring(firstSep + 1);
+      newUrl.trim();
+      if (newUrl.length() > 0) {
+        prefs.begin("wifi_cfg", false);
+        prefs.putString("cloud_url", newUrl);
+        prefs.end();
+        cloudUrl = newUrl;
+        Serial.printf("\n[SERIAL CONFIG] Đã đổi CLOUD_URL thành: %s\n", newUrl.c_str());
+        blinkLED(2, 100, 100);
       }
     }
   }

@@ -51,7 +51,7 @@ export class HmacAuthGuard implements CanActivate {
     const now = Date.now();
     const driftSeconds = Math.abs(now - timestamp) / 1000;
     const isDev = process.env.NODE_ENV === 'development' || !process.env.NODE_ENV;
-    if (isNaN(timestamp) || (!isDev && driftSeconds > 300)) {
+    if (isNaN(timestamp) || (!isDev && driftSeconds > 900)) {
       throw new UnauthorizedException(
         `Thời gian thiết bị không đồng bộ hoặc đã hết hạn (${Math.round(driftSeconds)}s lệch)`,
       );
