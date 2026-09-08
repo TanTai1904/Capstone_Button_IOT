@@ -1,21 +1,6 @@
 import axios from 'axios';
 
-export const API_URL = (() => {
-  const envUrl = (import.meta as any).env?.VITE_API_URL;
-  if (envUrl) return envUrl;
-  if (typeof window !== 'undefined') {
-    // When served via Nginx (port 80/443 or remote IP/domain), use current origin
-    if (
-      window.location.hostname !== 'localhost' ||
-      window.location.port === '' ||
-      window.location.port === '80' ||
-      window.location.port === '443'
-    ) {
-      return window.location.origin;
-    }
-  }
-  return 'http://localhost:5000';
-})();
+export const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:5000';
 
 export const api = axios.create({
   baseURL: `${API_URL}/api`,

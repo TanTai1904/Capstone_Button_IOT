@@ -368,9 +368,9 @@ export const CustomerHomePage: React.FC = () => {
       {/* Order Success Celebration Modal */}
       {showSuccessModal && activeSuccessOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
-          <div className="relative w-full max-w-md bg-white dark:bg-[#0F172A] rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-white/10 animate-in fade-in zoom-in-95 duration-200">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#101014] rounded-3xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in fade-in zoom-in-95 duration-200">
             {/* Top Header Banner */}
-            <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 p-6 text-white text-center relative overflow-hidden">
+            <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 dark:from-emerald-700 dark:via-teal-800 dark:to-zinc-900 p-6 text-white text-center relative overflow-hidden">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full text-[10px] font-mono font-bold tracking-wider uppercase mb-2">
                 <Radio className="w-3.5 h-3.5 animate-pulse text-emerald-200" />
                 <span>Nút Bấm ESP32 Đã Kích Hoạt</span>
@@ -381,15 +381,15 @@ export const CustomerHomePage: React.FC = () => {
                 <span>Đã Tạo Đơn Hàng Thành Công!</span>
               </h3>
               <p className="text-xs text-emerald-100 mt-1 max-w-xs mx-auto">
-                Tín hiệu ngắt phần cứng đã được xác thực và chuyển tiếp đến trạm đại lý.
+                Tín hiệu ngắt phần hardware đã được xác thực và chuyển tiếp đến trạm đại lý.
               </p>
             </div>
 
             {/* Order Details Body */}
             <div className="p-5 space-y-4">
               {/* Receipt Box */}
-              <div className="bg-slate-50 dark:bg-black/50 border border-slate-200/80 dark:border-white/5 rounded-2xl p-4 space-y-3">
-                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-white/10">
+              <div className="bg-slate-50 dark:bg-black/50 border border-slate-200/80 dark:border-zinc-800 rounded-2xl p-4 space-y-3">
+                <div className="flex items-center justify-between pb-2.5 border-b border-slate-200 dark:border-zinc-800">
                   <div>
                     <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider">Mã Đơn Hàng</span>
                     <p className="font-mono font-bold text-sm text-slate-900 dark:text-white">{activeSuccessOrder.orderNumber}</p>
@@ -404,7 +404,7 @@ export const CustomerHomePage: React.FC = () => {
                   {activeSuccessOrder.items?.map((it: any) => (
                     <div key={it.id || it.productName} className="flex items-center justify-between text-xs">
                       <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-lg bg-blue-500/10 text-blue-600 dark:text-cyan-400 flex items-center justify-center font-mono font-bold text-[11px]">
+                        <span className="w-6 h-6 rounded-lg bg-blue-500/10 dark:bg-red-500/15 text-blue-600 dark:text-red-400 flex items-center justify-center font-mono font-bold text-[11px]">
                           {it.quantity}x
                         </span>
                         <span className="font-semibold text-slate-800 dark:text-slate-200">{it.productName}</span>
@@ -415,7 +415,7 @@ export const CustomerHomePage: React.FC = () => {
                 </div>
 
                 {/* Total & Delivery Address */}
-                <div className="pt-2 border-t border-slate-200 dark:border-white/10 space-y-1 text-xs">
+                <div className="pt-2 border-t border-slate-200 dark:border-zinc-800 space-y-1 text-xs">
                   <div className="flex justify-between font-bold text-slate-900 dark:text-white">
                     <span>Tổng tiền thanh toán:</span>
                     <span className="text-emerald-600 dark:text-emerald-400 font-mono font-black text-sm">{activeSuccessOrder.totalAmount?.toLocaleString()} ₫</span>
@@ -435,7 +435,7 @@ export const CustomerHomePage: React.FC = () => {
                       <Clock className="w-3.5 h-3.5 text-amber-500 animate-spin" />
                       Thời gian hủy miễn phí:
                     </span>
-                    <span className="font-mono text-sm font-black text-amber-700 dark:text-amber-300 bg-white dark:bg-slate-900 px-2.5 py-0.5 rounded-lg border border-amber-500/30 shadow-sm">
+                    <span className="font-mono text-sm font-black text-amber-700 dark:text-amber-300 bg-white dark:bg-zinc-900 px-2.5 py-0.5 rounded-lg border border-amber-500/30 shadow-sm">
                       00:{secondsRemaining < 10 ? `0${secondsRemaining}` : secondsRemaining}s
                     </span>
                   </div>
@@ -471,9 +471,9 @@ export const CustomerHomePage: React.FC = () => {
 
                 <button
                   onClick={() => setShowSuccessModal(false)}
-                  className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-lg shadow-blue-500/20 flex items-center justify-center gap-1.5 transition-all"
+                  className="w-full py-3 rounded-xl bg-blue-600 hover:bg-blue-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 dark:shadow-red-600/30 flex items-center justify-center gap-1.5 transition-all"
                 >
-                  <CheckCircle2 className="w-4 h-4 text-cyan-300" />
+                  <CheckCircle2 className="w-4 h-4 text-cyan-300 dark:text-white" />
                   <span>ĐÃ HIỂU — THEO DÕI ĐƠN HÀNG</span>
                 </button>
               </div>
@@ -483,25 +483,25 @@ export const CustomerHomePage: React.FC = () => {
       )}
 
       {/* Customer Hero Banner */}
-      <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 border border-slate-200/80 dark:border-white/10 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+      <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 dark:from-[#111115] dark:via-[#191014] dark:to-[#111115] border border-slate-200/80 dark:border-red-500/25 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
         <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300 text-xs font-mono font-bold mb-2">
-              <span className="w-2 h-2 rounded-full bg-cyan-400 animate-ping" />
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 dark:bg-red-500/15 border border-cyan-500/20 dark:border-red-500/30 text-cyan-300 dark:text-red-400 text-xs font-mono font-bold mb-2">
+              <span className="w-2 h-2 rounded-full bg-cyan-400 dark:bg-red-400 animate-ping" />
               <span>CỔNG KHÁCH HÀNG SMART ORDER</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-black tracking-tight">Xin chào, {user?.fullName}!</h1>
             <p className="text-xs sm:text-sm text-slate-300 mt-1 flex items-center gap-1.5">
-              <MapPin className="w-4 h-4 text-cyan-400 shrink-0" />
+              <MapPin className="w-4 h-4 text-cyan-400 dark:text-red-400 shrink-0" />
               <span>Trạm đại lý liên kết: <strong className="text-white">{user?.store?.name || 'Đại lý Nhu Yếu Phẩm'}</strong></span>
             </p>
           </div>
-          <div className="flex items-center space-x-2 text-xs font-mono text-cyan-400 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
+          <div className="flex items-center space-x-2 text-xs font-mono text-cyan-400 dark:text-red-400 bg-white/5 dark:bg-red-500/10 border border-white/10 dark:border-red-500/20 px-3 py-1.5 rounded-xl">
             <Radio className="w-4 h-4" />
             <span>{devices.length} Thiết Bị Hoạt Động</span>
           </div>
         </div>
-        <div className="absolute -right-6 -bottom-6 w-48 h-48 rounded-full bg-cyan-500/10 blur-2xl pointer-events-none"></div>
+        <div className="absolute -right-6 -bottom-6 w-48 h-48 rounded-full bg-cyan-500/10 dark:bg-red-500/10 blur-2xl pointer-events-none"></div>
       </div>
 
       {/* Cancelled Success Toast */}
@@ -542,7 +542,7 @@ export const CustomerHomePage: React.FC = () => {
               Mã #{activeCancelOrder.orderNumber} • Hủy miễn phí: <strong className="font-mono">00:{secondsRemaining < 10 ? `0${secondsRemaining}` : secondsRemaining}s</strong>
             </p>
             <p className="text-[10px] text-amber-100 flex items-center gap-1">
-              <Lightbulb className="w-3 h-3 text-amber-300" />
+              <Lightbulb className="w-3.5 h-3.5 text-amber-300" />
               <span>Nhấn đúp 2 lần trên nút ESP32 để hủy ngay</span>
             </p>
           </div>
@@ -562,7 +562,7 @@ export const CustomerHomePage: React.FC = () => {
         <div className="lg:col-span-7 space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-              <Radio className="w-4 h-4 text-cyan-500" />
+              <Radio className="w-4 h-4 text-cyan-500 dark:text-red-400" />
               <span>Nút Bấm Của Bạn ({devices.length})</span>
             </h2>
             <div className="flex items-center gap-2">
@@ -574,9 +574,9 @@ export const CustomerHomePage: React.FC = () => {
                     setWifiSelectedDevId(devices[0].deviceId);
                   }
                 }}
-                className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs flex items-center gap-1.5 transition-all border border-slate-200 dark:border-slate-700"
+                className="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 font-semibold text-xs flex items-center gap-1.5 transition-all border border-slate-200 dark:border-zinc-800 dark:hover:border-red-500/30"
               >
-                <Wifi className="w-3.5 h-3.5 text-sky-500" />
+                <Wifi className="w-3.5 h-3.5 text-sky-500 dark:text-red-400" />
                 <span>Đổi Mạng Wi-Fi</span>
               </button>
               <button
@@ -587,7 +587,7 @@ export const CustomerHomePage: React.FC = () => {
                   setDeviceCodeInput('');
                   setLookupError(null);
                 }}
-                className="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm transition-all"
+                className="px-3.5 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm dark:shadow-red-600/25 transition-all"
               >
                 <Plus className="w-4 h-4" />
                 <span>Thêm Nút (Mã số / Quét QR)</span>
@@ -598,7 +598,7 @@ export const CustomerHomePage: React.FC = () => {
           {loading ? (
             <div className="p-8 text-center text-xs font-mono text-slate-500">Đang tải danh sách nút bấm...</div>
           ) : devices.length === 0 ? (
-            <div className="p-8 bg-white dark:bg-[#0F172A] border border-slate-200 dark:border-slate-800 rounded-2xl text-center space-y-3 shadow-sm">
+            <div className="p-8 bg-white dark:bg-[#101014] border border-slate-200 dark:border-zinc-800 rounded-2xl text-center space-y-3 shadow-sm">
               <p className="text-xs text-slate-600 dark:text-slate-400">Bạn chưa liên kết nút bấm nào. Nhập mã số hoặc quét mã QR từ thiết bị để bắt đầu!</p>
               <button
                 onClick={() => {
@@ -608,7 +608,7 @@ export const CustomerHomePage: React.FC = () => {
                   setDeviceCodeInput('');
                   setLookupError(null);
                 }}
-                className="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-semibold text-xs inline-flex items-center gap-2 shadow-sm"
+                className="px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 text-white font-semibold text-xs inline-flex items-center gap-2 shadow-sm dark:shadow-red-600/25"
               >
                 <Plus className="w-4 h-4" />
                 <span>Thêm Nút Bằng Mã Số / QR</span>
@@ -626,10 +626,10 @@ export const CustomerHomePage: React.FC = () => {
                 return (
                   <Floating3DCard key={dev.id} depth={14} className="rounded-3xl">
                     <div
-                      className={`bg-white dark:bg-[#0F172A] border rounded-3xl p-5 shadow-sm transition-all flex flex-col justify-between space-y-4 ${
+                      className={`bg-white dark:bg-[#101014] border rounded-3xl p-5 shadow-sm transition-all flex flex-col justify-between space-y-4 ${
                         isDevicePressing
                           ? 'border-amber-500 ring-4 ring-amber-400/30 shadow-lg scale-[1.01]'
-                          : 'border-slate-200/80 dark:border-white/10 hover:border-cyan-500/40 hover:shadow-md'
+                          : 'border-slate-200/80 dark:border-zinc-800 hover:border-blue-500/40 dark:hover:border-red-500/40 hover:shadow-md'
                       }`}
                     >
                       <div className="flex items-start justify-between">
@@ -642,7 +642,7 @@ export const CustomerHomePage: React.FC = () => {
                               className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold border ${
                                 isOnline
                                   ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/25'
-                                  : 'bg-slate-100 dark:bg-slate-800 text-slate-500 border-slate-200 dark:border-white/10'
+                                  : 'bg-slate-100 dark:bg-zinc-800 text-slate-500 dark:text-zinc-400 border-slate-200 dark:border-zinc-700'
                               }`}
                             >
                               <span
@@ -657,7 +657,7 @@ export const CustomerHomePage: React.FC = () => {
                             {config?.customName || 'Smart Button'}
                           </h3>
                           <p className="text-xs text-slate-600 dark:text-slate-400 font-medium mt-1">
-                            Sản phẩm: <span className="text-blue-600 dark:text-cyan-400 font-bold">{product?.name || 'Chưa gán'}</span>
+                            Sản phẩm: <span className="text-blue-600 dark:text-red-400 font-bold">{product?.name || 'Chưa gán'}</span>
                           </p>
                           <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
                             Định mức: <strong>{config?.defaultQuantity || 1} {product?.unit}</strong> •{' '}
@@ -669,7 +669,7 @@ export const CustomerHomePage: React.FC = () => {
                           className={`w-12 h-12 rounded-2xl border flex items-center justify-center shrink-0 transition-all ${
                             isDevicePressing
                               ? 'bg-amber-100 border-amber-300 text-amber-600 animate-bounce'
-                              : 'bg-cyan-500/10 border-cyan-500/20 text-cyan-500'
+                              : 'bg-blue-500/10 dark:bg-red-500/15 border-blue-500/20 dark:border-red-500/30 text-blue-600 dark:text-red-400'
                           }`}
                         >
                           <Radio className="w-6 h-6" />
@@ -685,27 +685,27 @@ export const CustomerHomePage: React.FC = () => {
                       )}
 
                       {/* Hardware Telemetry Bar */}
-                      <div className="flex items-center gap-3 pt-2 border-t border-slate-100 dark:border-white/5 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
+                      <div className="flex items-center gap-3 pt-2 border-t border-slate-100 dark:border-zinc-800/80 text-[11px] text-slate-500 dark:text-slate-400 font-mono">
                         <span className="flex items-center gap-1 font-medium">
                           <Battery className="w-3.5 h-3.5 text-emerald-500" />
                           Pin: <strong className="text-slate-700 dark:text-slate-300">{dev.batteryLevel ?? 96}%</strong>
                         </span>
                         <span>•</span>
                         <span className="flex items-center gap-1 font-medium">
-                          <Wifi className="w-3.5 h-3.5 text-cyan-500" />
+                          <Wifi className="w-3.5 h-3.5 text-blue-500 dark:text-red-400" />
                           Sóng: <strong className="text-slate-700 dark:text-slate-300">{dev.wifiRSSI ?? -55} dBm</strong>
                         </span>
-                        <span className="ml-auto text-[10px] text-slate-400">
+                        <span className="ml-auto text-[10px] text-slate-400 dark:text-zinc-500">
                           Cửa sổ hủy: {config?.cancelWindowSeconds ?? 60}s
                         </span>
                       </div>
 
                       {/* Hardware Physical Gestures Guide */}
-                      <div className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-black/30 border border-slate-100 dark:border-white/5 text-[10px] text-slate-600 dark:text-slate-400 flex items-center justify-between">
-                        <span><strong className="text-cyan-600 dark:text-cyan-400 font-mono">1 Click:</strong> Bật nguồn</span>
-                        <span className="text-slate-300 dark:text-slate-700">•</span>
-                        <span><strong className="text-blue-600 dark:text-blue-400 font-mono">2 Clicks:</strong> Đặt / Hủy đơn</span>
-                        <span className="text-slate-300 dark:text-slate-700">•</span>
+                      <div className="px-3 py-1.5 rounded-xl bg-slate-50 dark:bg-zinc-950/70 border border-slate-100 dark:border-zinc-800/80 text-[10px] text-slate-600 dark:text-slate-400 flex items-center justify-between">
+                        <span><strong className="text-blue-600 dark:text-red-400 font-mono">1 Click:</strong> Bật nguồn</span>
+                        <span className="text-slate-300 dark:text-zinc-700">•</span>
+                        <span><strong className="text-indigo-600 dark:text-rose-400 font-mono">2 Clicks:</strong> Đặt / Hủy đơn</span>
+                        <span className="text-slate-300 dark:text-zinc-700">•</span>
                         <span><strong className="text-amber-600 dark:text-amber-400 font-mono">Giữ 5s:</strong> Đổi Wi-Fi</span>
                       </div>
 
@@ -713,7 +713,7 @@ export const CustomerHomePage: React.FC = () => {
                       <div className="space-y-2">
                         <button
                           onClick={() => handleQuickReorder(dev.deviceId)}
-                          className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs shadow-lg shadow-blue-500/20 flex items-center justify-center space-x-2 transition-all btn-press"
+                          className="w-full py-3.5 rounded-2xl bg-blue-600 hover:bg-blue-700 dark:bg-gradient-to-r dark:from-red-600 dark:via-red-500 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 text-white font-bold text-xs shadow-lg shadow-blue-500/20 dark:shadow-red-600/30 flex items-center justify-center space-x-2 transition-all btn-press"
                         >
                           <ShoppingBag className="w-4 h-4" />
                           <span>ĐẶT NGAY BẰNG 1 CHẠM TRÊN WEB</span>
@@ -722,9 +722,9 @@ export const CustomerHomePage: React.FC = () => {
                         <div className="flex items-center gap-2 pt-1">
                           <button
                             onClick={() => setChangeWifiDevice(dev)}
-                            className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                            className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 dark:hover:text-red-400 border border-transparent dark:border-zinc-800 dark:hover:border-red-500/30 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
                           >
-                            <Wifi className="w-3.5 h-3.5 text-cyan-500" />
+                            <Wifi className="w-3.5 h-3.5 text-blue-500 dark:text-red-400" />
                             <span>Đổi Wi-Fi</span>
                           </button>
                           <button
@@ -732,9 +732,9 @@ export const CustomerHomePage: React.FC = () => {
                               setTransferringDevice(dev);
                               setTransferResult(null);
                             }}
-                            className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                            className="flex-1 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-700 dark:text-zinc-300 dark:hover:text-rose-400 border border-transparent dark:border-zinc-800 dark:hover:border-rose-500/30 text-[11px] font-semibold flex items-center justify-center gap-1.5 transition-colors"
                           >
-                            <Share2 className="w-3.5 h-3.5 text-indigo-500" />
+                            <Share2 className="w-3.5 h-3.5 text-indigo-500 dark:text-rose-400" />
                             <span>Chuyển Nhượng</span>
                           </button>
                         </div>
@@ -750,12 +750,12 @@ export const CustomerHomePage: React.FC = () => {
         {/* Right Column: Order History */}
         <div className="lg:col-span-5 space-y-4">
           <h2 className="text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-2">
-            <Clock className="w-4 h-4 text-slate-400" />
+            <Clock className="w-4 h-4 text-slate-400 dark:text-zinc-400" />
             <span>Lịch Sử Đơn Hàng</span>
           </h2>
 
           {orders.length === 0 ? (
-            <div className="p-6 bg-white dark:bg-[#0F172A] border border-slate-200/80 dark:border-white/10 rounded-3xl text-center">
+            <div className="p-6 bg-white dark:bg-[#101014] border border-slate-200/80 dark:border-zinc-800 rounded-3xl text-center">
               <p className="text-xs text-slate-500 dark:text-slate-400">Chưa có lịch sử đơn hàng nào.</p>
             </div>
           ) : (
@@ -766,7 +766,7 @@ export const CustomerHomePage: React.FC = () => {
                   PENDING: { label: 'Chờ xác nhận (Có thể hủy)', cls: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30' },
                   CONFIRMED: { label: 'Đã xác nhận', cls: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/30' },
                   PREPARING: { label: 'Đang chuẩn bị', cls: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/30' },
-                  SHIPPING: { label: 'Đang giao', cls: 'bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border-cyan-500/30' },
+                  SHIPPING: { label: 'Đang giao', cls: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30' },
                   COMPLETED: { label: 'Hoàn thành', cls: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30' },
                   CANCELLED: { label: 'Đã hủy', cls: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/30' },
                 };
@@ -775,10 +775,10 @@ export const CustomerHomePage: React.FC = () => {
                 return (
                   <div
                     key={order.id}
-                    className={`bg-white dark:bg-[#0F172A] border rounded-2xl p-4 shadow-sm text-xs space-y-2.5 transition-all ${
+                    className={`bg-white dark:bg-[#101014] border rounded-2xl p-4 shadow-sm text-xs space-y-2.5 transition-all ${
                       isPending
                         ? 'border-amber-500/40 shadow-amber-500/5 ring-1 ring-amber-500/20'
-                        : 'border-slate-200/80 dark:border-white/10 hover:border-cyan-500/30'
+                        : 'border-slate-200/80 dark:border-zinc-800 hover:border-blue-500/30 dark:hover:border-red-500/30'
                     }`}
                   >
                     <div className="flex items-center justify-between">
@@ -797,7 +797,7 @@ export const CustomerHomePage: React.FC = () => {
                       ))}
                     </div>
 
-                    <div className="text-[11px] text-slate-400 pt-2 border-t border-slate-100 dark:border-white/5 flex justify-between font-mono items-center">
+                    <div className="text-[11px] text-slate-400 dark:text-zinc-500 pt-2 border-t border-slate-100 dark:border-zinc-800/80 flex justify-between font-mono items-center">
                       <span>{new Date(order.createdAt).toLocaleDateString('vi-VN')}</span>
                       <span>Tổng: <strong className="text-slate-900 dark:text-white">{order.totalAmount.toLocaleString()} ₫</strong></span>
                     </div>
@@ -827,18 +827,18 @@ export const CustomerHomePage: React.FC = () => {
       {/* ========================================================================= */}
       {showAddModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-slate-800 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#101014] rounded-2xl shadow-2xl overflow-hidden border border-slate-200 dark:border-zinc-800 animate-in fade-in zoom-in-95 duration-150">
             {/* Header */}
-            <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div className="p-5 border-b border-slate-100 dark:border-zinc-800 flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-200 dark:border-sky-800">
+                <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-red-500/15 text-sky-600 dark:text-red-400 flex items-center justify-center border border-sky-200 dark:border-red-500/30">
                   <QrCode className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Thêm Nút Bấm Vào Tài Khoản
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">
                     Nhập mã số 6 chữ số hoặc quét mã QR từ thiết bị
                   </p>
                 </div>
@@ -850,7 +850,7 @@ export const CustomerHomePage: React.FC = () => {
                   setLookupError(null);
                   setFoundDevice(null);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -861,7 +861,7 @@ export const CustomerHomePage: React.FC = () => {
               {addStep === 1 && (
                 <div className="space-y-4">
                   {/* Tab Selector */}
-                  <div className="flex p-1 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+                  <div className="flex p-1 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800">
                     <button
                       type="button"
                       onClick={() => {
@@ -870,8 +870,8 @@ export const CustomerHomePage: React.FC = () => {
                       }}
                       className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                         addTab === 'CODE'
-                          ? 'bg-white dark:bg-slate-800 text-sky-600 dark:text-sky-400 shadow-sm'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                          ? 'bg-white dark:bg-zinc-800 text-sky-600 dark:text-red-400 shadow-sm'
+                          : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       <Hash className="w-4 h-4" />
@@ -885,8 +885,8 @@ export const CustomerHomePage: React.FC = () => {
                       }}
                       className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                         addTab === 'QR_SCAN'
-                          ? 'bg-white dark:bg-slate-800 text-sky-600 dark:text-sky-400 shadow-sm'
-                          : 'text-slate-600 dark:text-slate-400 hover:text-slate-900'
+                          ? 'bg-white dark:bg-zinc-800 text-sky-600 dark:text-red-400 shadow-sm'
+                          : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                       }`}
                     >
                       <Camera className="w-4 h-4" />
@@ -912,20 +912,20 @@ export const CustomerHomePage: React.FC = () => {
                             if (e.key === 'Enter') handleLookupCode();
                           }}
                           placeholder="Ví dụ: 882910 hoặc BTN-8829-WTR"
-                          className="w-full px-4 py-3 text-sm font-mono font-bold tracking-wider rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/30 transition-all placeholder:font-normal placeholder:tracking-normal"
+                          className="w-full px-4 py-3 text-sm font-mono font-bold tracking-wider rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-sky-500/30 dark:focus:ring-red-500/30 transition-all placeholder:font-normal placeholder:tracking-normal"
                         />
                       </div>
 
                       {/* Quick demo pills */}
-                      <div className="flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500">
-                        <span className="text-slate-400">Mã mẫu:</span>
+                      <div className="flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500 dark:text-zinc-400">
+                        <span className="text-slate-400 dark:text-zinc-500">Mã mẫu:</span>
                         <button
                           type="button"
                           onClick={() => {
                             setDeviceCodeInput('882910');
                             handleLookupCode('882910');
                           }}
-                          className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 font-mono text-slate-700 dark:text-slate-300 font-semibold"
+                          className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-mono text-slate-700 dark:text-zinc-300 font-semibold"
                         >
                           882910
                         </button>
@@ -935,7 +935,7 @@ export const CustomerHomePage: React.FC = () => {
                             setDeviceCodeInput('BTN-8829-WTR');
                             handleLookupCode('BTN-8829-WTR');
                           }}
-                          className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 font-mono text-slate-700 dark:text-slate-300 font-semibold"
+                          className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-mono text-slate-700 dark:text-zinc-300 font-semibold"
                         >
                           BTN-8829-WTR
                         </button>
@@ -945,7 +945,7 @@ export const CustomerHomePage: React.FC = () => {
                             setDeviceCodeInput('SOB-000001');
                             handleLookupCode('SOB-000001');
                           }}
-                          className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 font-mono text-slate-700 dark:text-slate-300 font-semibold"
+                          className="px-2 py-0.5 rounded-md bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 font-mono text-slate-700 dark:text-zinc-300 font-semibold"
                         >
                           SOB-000001
                         </button>
@@ -961,7 +961,7 @@ export const CustomerHomePage: React.FC = () => {
                       <button
                         onClick={() => handleLookupCode()}
                         disabled={addSubmitting || !deviceCodeInput.trim()}
-                        className="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white font-bold text-xs shadow-sm transition-all flex items-center justify-center gap-2"
+                        className="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 disabled:opacity-50 text-white font-bold text-xs shadow-sm dark:shadow-red-600/25 transition-all flex items-center justify-center gap-2"
                       >
                         {addSubmitting ? <RefreshCw className="w-4 h-4 animate-spin" /> : <span>TÌM KIẾM THIẾT BỊ</span>}
                       </button>
@@ -981,8 +981,8 @@ export const CustomerHomePage: React.FC = () => {
                       )}
 
                       {/* Manual QR paste fallback */}
-                      <details className="text-xs text-slate-500">
-                        <summary className="cursor-pointer hover:text-slate-700 dark:hover:text-slate-300">
+                      <details className="text-xs text-slate-500 dark:text-zinc-400">
+                        <summary className="cursor-pointer hover:text-slate-700 dark:hover:text-zinc-300">
                           Hoặc dán chuỗi mã QR thủ công
                         </summary>
                         <div className="mt-2 space-y-2">
@@ -991,12 +991,12 @@ export const CustomerHomePage: React.FC = () => {
                             value={addQrInput}
                             onChange={(e) => setAddQrInput(e.target.value)}
                             placeholder="SOBPAIR://setup?device=... hoặc SOB-000001"
-                            className="w-full px-3 py-2 text-xs font-mono rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800"
+                            className="w-full px-3 py-2 text-xs font-mono rounded-lg bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white"
                           />
                           <button
                             onClick={() => handleLookupCode(addQrInput)}
                             disabled={addSubmitting || !addQrInput.trim()}
-                            className="w-full py-2 bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 rounded-lg font-bold text-xs"
+                            className="w-full py-2 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-800 dark:text-zinc-200 rounded-lg font-bold text-xs"
                           >
                             Xác nhận chuỗi QR
                           </button>
@@ -1044,9 +1044,9 @@ export const CustomerHomePage: React.FC = () => {
                       value={customDeviceName}
                       onChange={(e) => setCustomDeviceName(e.target.value)}
                       placeholder="VD: Nút Nước Lavie Bếp, Nút Gas Kho..."
-                      className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-medium"
+                      className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-medium"
                     />
-                    <p className="text-[11px] text-slate-500 mt-1">
+                    <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1">
                       Tên này sẽ hiển thị trên màn hình đặt hàng của bạn.
                     </p>
                   </div>
@@ -1055,7 +1055,7 @@ export const CustomerHomePage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setAddStep(1)}
-                      className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs"
+                      className="px-4 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-slate-700 dark:text-zinc-300 font-bold text-xs"
                     >
                       Quay lại
                     </button>
@@ -1088,7 +1088,7 @@ export const CustomerHomePage: React.FC = () => {
                       setAddStep(1);
                       setFoundDevice(null);
                     }}
-                    className="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-bold text-xs transition-colors"
+                    className="w-full py-3 rounded-xl bg-sky-600 hover:bg-sky-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 text-white font-bold text-xs transition-colors"
                   >
                     BẮT ĐẦU SỬ DỤNG
                   </button>
@@ -1104,18 +1104,18 @@ export const CustomerHomePage: React.FC = () => {
       {/* ========================================================================= */}
       {(changeWifiDevice || showWifiWebModal) && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg bg-white dark:bg-[#0F172A] rounded-2xl shadow-2xl p-6 border border-slate-200 dark:border-slate-800 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+          <div className="relative w-full max-w-lg bg-white dark:bg-[#101014] rounded-2xl shadow-2xl p-6 border border-slate-200 dark:border-zinc-800 space-y-4 animate-in fade-in zoom-in-95 duration-150">
             {/* Header */}
-            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800">
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-zinc-800">
               <div className="flex items-center gap-2.5">
-                <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-sky-950/50 text-sky-600 dark:text-sky-400 flex items-center justify-center border border-sky-200 dark:border-sky-800">
+                <div className="w-10 h-10 rounded-xl bg-sky-50 dark:bg-red-500/15 text-sky-600 dark:text-red-400 flex items-center justify-center border border-sky-200 dark:border-red-500/30">
                   <Wifi className="w-5 h-5" />
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900 dark:text-white">
                     Cấu Hình Mạng Wi-Fi Nút Bấm
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500 dark:text-zinc-400">
                     Chỉ cần nhập tên mạng & mật khẩu — Bảo toàn 100% sản phẩm và sở hữu
                   </p>
                 </div>
@@ -1126,24 +1126,24 @@ export const CustomerHomePage: React.FC = () => {
                   setShowWifiWebModal(false);
                   setWifiSuccessMsg(null);
                 }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Tab Switcher: CHỌN PHƯƠNG THỨC CHỌN NÚT */}
-            <div className="flex p-1 bg-slate-100 dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800">
+            <div className="flex p-1 bg-slate-100 dark:bg-zinc-900 rounded-xl border border-slate-200 dark:border-zinc-800">
               <button
                 type="button"
                 onClick={() => setWifiPanelTab('BLE')}
                 className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                   wifiPanelTab === 'BLE'
-                    ? 'bg-white dark:bg-slate-800 text-cyan-600 dark:text-cyan-400 shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-cyan-600 dark:text-red-400 shadow-sm'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
-                <Bluetooth className="w-3.5 h-3.5 text-cyan-500" />
+                <Bluetooth className="w-3.5 h-3.5 text-cyan-500 dark:text-red-400" />
                 <span>Bluetooth (Không Dây)</span>
               </button>
               <button
@@ -1151,8 +1151,8 @@ export const CustomerHomePage: React.FC = () => {
                 onClick={() => setWifiPanelTab('CODE')}
                 className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                   wifiPanelTab === 'CODE'
-                    ? 'bg-white dark:bg-slate-800 text-sky-600 dark:text-sky-400 shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-sky-600 dark:text-red-400 shadow-sm'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Hash className="w-3.5 h-3.5" />
@@ -1163,8 +1163,8 @@ export const CustomerHomePage: React.FC = () => {
                 onClick={() => setWifiPanelTab('SELECT')}
                 className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                   wifiPanelTab === 'SELECT'
-                    ? 'bg-white dark:bg-slate-800 text-sky-600 dark:text-sky-400 shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                    ? 'bg-white dark:bg-zinc-800 text-sky-600 dark:text-red-400 shadow-sm'
+                    : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white'
                 }`}
               >
                 <Radio className="w-3.5 h-3.5" />
@@ -1184,7 +1184,7 @@ export const CustomerHomePage: React.FC = () => {
 
             {/* PHƯƠNG THỨC 1: NHẬP MÃ SỐ PIN */}
             {wifiPanelTab === 'CODE' && (
-              <div className="space-y-3 p-3.5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <div className="space-y-3 p-3.5 bg-slate-50 dark:bg-zinc-900/60 rounded-2xl border border-slate-200 dark:border-zinc-800">
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
                   Nhập mã PIN 6 số hoặc Device ID in trên nút:
                 </label>
@@ -1200,20 +1200,20 @@ export const CustomerHomePage: React.FC = () => {
                       }
                     }}
                     placeholder="VD: 882910 hoặc SOB-000001"
-                    className="flex-1 px-3.5 py-2.5 text-sm font-mono font-bold rounded-xl bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-sky-500/30"
+                    className="flex-1 px-3.5 py-2.5 text-sm font-mono font-bold rounded-xl bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-sky-500/30 dark:focus:ring-red-500/30"
                   />
                   <button
                     type="button"
                     onClick={() => handleLookupWifiCode(wifiCodeInput)}
                     disabled={wifiLookupLoading || !wifiCodeInput.trim()}
-                    className="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0"
+                    className="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 disabled:opacity-50 text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0"
                   >
                     {wifiLookupLoading ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <span>Tra Cứu</span>}
                   </button>
                 </div>
 
                 {/* Quick samples */}
-                <div className="flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500">
+                <div className="flex items-center gap-1.5 flex-wrap text-[11px] text-slate-500 dark:text-zinc-400">
                   <span>Mã mẫu:</span>
                   <button
                     type="button"
@@ -1221,7 +1221,7 @@ export const CustomerHomePage: React.FC = () => {
                       setWifiCodeInput('882910');
                       handleLookupWifiCode('882910');
                     }}
-                    className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 font-mono text-sky-600 dark:text-sky-400 font-bold"
+                    className="px-2 py-0.5 rounded-md bg-white dark:bg-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 font-mono text-sky-600 dark:text-red-400 font-bold"
                   >
                     882910
                   </button>
@@ -1231,7 +1231,7 @@ export const CustomerHomePage: React.FC = () => {
                       setWifiCodeInput('SOB-000001');
                       handleLookupWifiCode('SOB-000001');
                     }}
-                    className="px-2 py-0.5 rounded-md bg-white dark:bg-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 font-mono text-sky-600 dark:text-sky-400 font-bold"
+                    className="px-2 py-0.5 rounded-md bg-white dark:bg-zinc-800 hover:bg-slate-100 dark:hover:bg-zinc-700 border border-slate-200 dark:border-zinc-700 font-mono text-sky-600 dark:text-red-400 font-bold"
                   >
                     SOB-000001
                   </button>
@@ -1245,7 +1245,7 @@ export const CustomerHomePage: React.FC = () => {
 
             {/* PHƯƠNG THỨC 2: CHỌN NÚT TỪ DANH SÁCH */}
             {wifiPanelTab === 'SELECT' && (
-              <div className="space-y-2 p-3.5 bg-slate-50 dark:bg-slate-900/40 rounded-2xl border border-slate-200 dark:border-slate-800">
+              <div className="space-y-2 p-3.5 bg-slate-50 dark:bg-zinc-900/60 rounded-2xl border border-slate-200 dark:border-zinc-800">
                 <label className="block text-xs font-bold text-slate-700 dark:text-slate-300">
                   Chọn nút bấm cần cấu hình lại mạng:
                 </label>
@@ -1259,7 +1259,7 @@ export const CustomerHomePage: React.FC = () => {
                       const d = devices.find(x => x.deviceId === e.target.value);
                       if (d) setChangeWifiDevice(d);
                     }}
-                    className="w-full px-3.5 py-2.5 text-xs font-mono font-bold bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-xl text-slate-900 dark:text-white outline-none"
+                    className="w-full px-3.5 py-2.5 text-xs font-mono font-bold bg-white dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 rounded-xl text-slate-900 dark:text-white outline-none"
                   >
                     {devices.map((d) => (
                       <option key={d.id} value={d.deviceId}>
@@ -1315,10 +1315,10 @@ export const CustomerHomePage: React.FC = () => {
                   value={wifiSsidInput}
                   onChange={(e) => setWifiSsidInput(e.target.value)}
                   placeholder="VD: Home_WiFi_2.4G"
-                  className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-sky-500/30"
+                  className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-medium focus:outline-none focus:ring-2 focus:ring-sky-500/30 dark:focus:ring-red-500/30"
                 />
                 {/* Quick fill pills */}
-                <div className="flex items-center gap-1.5 mt-1.5 flex-wrap text-[11px] text-slate-500">
+                <div className="flex items-center gap-1.5 mt-1.5 flex-wrap text-[11px] text-slate-500 dark:text-zinc-400">
                   <span>Gợi ý:</span>
                   {['Home_WiFi_2.4G', 'FPT_Telecom_GiaDinh', 'Viettel_5G_Extender', 'SmartOffice_Guest'].map((net) => (
                     <button
@@ -1327,8 +1327,8 @@ export const CustomerHomePage: React.FC = () => {
                       onClick={() => setWifiSsidInput(net)}
                       className={`px-2 py-0.5 rounded-md font-mono text-[11px] transition-colors ${
                         wifiSsidInput === net
-                          ? 'bg-sky-600 text-white font-bold'
-                          : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300'
+                          ? 'bg-sky-600 dark:bg-red-600 text-white font-bold'
+                          : 'bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800 text-slate-700 dark:text-zinc-300'
                       }`}
                     >
                       {net}
@@ -1347,20 +1347,20 @@ export const CustomerHomePage: React.FC = () => {
                     value={wifiPasswordInput}
                     onChange={(e) => setWifiPasswordInput(e.target.value)}
                     placeholder="Nhập mật khẩu Wi-Fi nhà bạn"
-                    className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-white font-medium pr-14 focus:outline-none focus:ring-2 focus:ring-sky-500/30"
+                    className="w-full px-3.5 py-2.5 text-xs rounded-xl bg-slate-50 dark:bg-zinc-950 border border-slate-200 dark:border-zinc-800 text-slate-900 dark:text-white font-medium pr-14 focus:outline-none focus:ring-2 focus:ring-sky-500/30 dark:focus:ring-red-500/30"
                   />
                   <button
                     type="button"
                     onClick={() => setShowWifiPassword(!showWifiPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-sky-600 dark:text-sky-400"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[11px] font-bold text-sky-600 dark:text-red-400"
                   >
                     {showWifiPassword ? 'Ẩn' : 'Hiện'}
                   </button>
                 </div>
               </div>
 
-              <div className="p-2.5 bg-blue-50/70 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-900/40 rounded-xl text-[11px] text-blue-700 dark:text-blue-300 flex items-center gap-2">
-                <Zap className="w-4 h-4 text-blue-500 shrink-0" />
+              <div className="p-2.5 bg-blue-50/70 dark:bg-red-950/20 border border-blue-200 dark:border-red-900/40 rounded-xl text-[11px] text-blue-700 dark:text-red-300 flex items-center gap-2">
+                <Zap className="w-4 h-4 text-blue-500 dark:text-red-400 shrink-0" />
                 <span><strong>Đổi Wi-Fi 1 Chạm:</strong> Lưu trực tiếp trên Web/App — Đèn viền nút sẽ tự đổi sang XANH LÁ. Không cần mở trang 192.168.4.1!</span>
               </div>
 
@@ -1368,7 +1368,7 @@ export const CustomerHomePage: React.FC = () => {
                 type="button"
                 onClick={() => handleSaveWifiOnWeb()}
                 disabled={wifiUpdating || !wifiSsidInput.trim()}
-                className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white font-black text-xs shadow-lg shadow-sky-500/20 transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-2xl bg-sky-600 hover:bg-sky-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 disabled:opacity-50 text-white font-black text-xs shadow-lg shadow-sky-500/20 dark:shadow-red-600/30 transition-all flex items-center justify-center gap-2"
               >
                 {wifiUpdating ? (
                   <>
@@ -1393,10 +1393,10 @@ export const CustomerHomePage: React.FC = () => {
       {/* ========================================================================= */}
       {transferringDevice && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md">
-          <div className="relative w-full max-w-md bg-white dark:bg-[#0F172A] rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-white/10 space-y-4">
+          <div className="relative w-full max-w-md bg-white dark:bg-[#101014] rounded-3xl shadow-2xl p-6 border border-slate-200 dark:border-zinc-800 space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                <Share2 className="w-5 h-5 text-indigo-500" />
+                <Share2 className="w-5 h-5 text-indigo-500 dark:text-rose-400" />
                 <h3 className="text-base font-bold text-slate-900 dark:text-white">Chuyển Nhượng Nút Bấm</h3>
               </div>
               <button onClick={() => setTransferringDevice(null)} className="p-1 text-slate-400 hover:text-white">
@@ -1406,12 +1406,12 @@ export const CustomerHomePage: React.FC = () => {
 
             {!transferResult ? (
               <div className="space-y-3">
-                <p className="text-xs text-slate-600 dark:text-slate-400">
+                <p className="text-xs text-slate-600 dark:text-zinc-400">
                   Khi bạn chuyển nhượng nút <strong>{transferringDevice.deviceId}</strong>, bạn sẽ mất quyền điều khiển nút này. Hệ thống sẽ sinh mã QR mới để người nhận quét và sở hữu.
                 </p>
                 <button
                   onClick={handleTransferSubmit}
-                  className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs"
+                  className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 text-white font-bold text-xs"
                 >
                   XÁC NHẬN CHUYỂN NHƯỢNG
                 </button>
@@ -1420,7 +1420,7 @@ export const CustomerHomePage: React.FC = () => {
               <div className="space-y-3 text-center">
                 <CheckCircle2 className="w-10 h-10 text-emerald-500 mx-auto" />
                 <h4 className="text-sm font-bold text-slate-900 dark:text-white">Đã Tạo Mã Chuyển Nhượng Mới!</h4>
-                <p className="text-xs text-slate-500 font-mono break-all p-3 rounded-xl bg-slate-50 dark:bg-black/40 border border-slate-200 dark:border-white/10 text-left">
+                <p className="text-xs text-slate-500 font-mono break-all p-3 rounded-xl bg-slate-50 dark:bg-black/50 border border-slate-200 dark:border-zinc-800 text-left">
                   {transferResult.qrPayload}
                 </p>
                 <p className="text-[11px] text-slate-400">
@@ -1428,7 +1428,7 @@ export const CustomerHomePage: React.FC = () => {
                 </p>
                 <button
                   onClick={() => setTransferringDevice(null)}
-                  className="px-6 py-2 rounded-xl bg-cyan-500 text-slate-950 font-bold text-xs"
+                  className="px-6 py-2 rounded-xl bg-cyan-500 hover:bg-cyan-600 dark:bg-gradient-to-r dark:from-red-600 dark:to-rose-600 text-slate-950 dark:text-white font-bold text-xs"
                 >
                   ĐÓNG
                 </button>

@@ -39,14 +39,14 @@ Nếu máy chưa cài Flutter:
 - Thư mục `C:\flutter\bin` đã có sẵn trong PATH của bạn!
 
 ### 2. Chạy ứng dụng nhanh:
-Vào thư mục `mobile` và thực hiện một trong các cách sau:
+Vào thư mục `mobile_flutter` và thực hiện một trong các cách sau:
 
 #### Cách 1: Click đúp vào file `run_mobile.bat`
 File script sẽ tự động kiểm tra dependencies và hỏi bạn muốn chạy trên Web (Chrome), Android hay Windows.
 
 #### Cách 2: Chạy lệnh từ Terminal
 ```bash
-cd mobile
+cd mobile_flutter
 
 # Cài đặt thư viện
 flutter pub get

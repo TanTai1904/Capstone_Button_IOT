@@ -22,7 +22,7 @@ services:
   backend:
     build:
       context: ./backend
-      dockerfile: Dockerfile
+      dockerfile: ../docker/Dockerfile.backend
     container_name: smart_order_backend
     restart: always
     environment:
@@ -32,7 +32,6 @@ services:
       JWT_REFRESH_SECRET: "smart_button_prod_refresh_secret_key_2026_8832"
       DEVICE_DEFAULT_SECRET: "smart_order_device_master_secret_2026"
       NODE_ENV: "production"
-      SEED_DATABASE: "true"
     ports:
       - "5000:5000"
     depends_on:
@@ -42,7 +41,7 @@ services:
   frontend:
     build:
       context: ./frontend
-      dockerfile: Dockerfile
+      dockerfile: ../docker/Dockerfile.frontend
     container_name: smart_order_frontend
     restart: always
     ports:

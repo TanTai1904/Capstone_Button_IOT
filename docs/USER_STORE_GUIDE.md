@@ -25,11 +25,15 @@
 3. Chuyển vào menu **"Đơn Hàng Trực Tiếp"** (`/store/dashboard`).
 4. Để mở cửa sổ này trên nửa màn hình bên phải.
 
-### Bước 2: Kích Hoạt Đặt Hàng Qua Nút Bấm Vật Lý Hoặc Web
-1. **Qua Phần Cứng Vật Lý (ESP32 Button)**: Nhấn nút bấm ESP32 đã nạp firmware trong thư mục `hardware/`. Thiết bị tự động thức dậy, bắt tay Wi-Fi, ký chữ ký HMAC-SHA256 và gửi tín hiệu đặt hàng lên Cloud.
-2. **Hoặc Qua Cổng Khách Hàng**: Truy cập `http://localhost:5173/customer/home` (đăng nhập `customer@smartorder.local`) và bấm **"ĐẶT HÀNG 1-CHẠM"**.
-3. **Kết Quả Realtime**:
-   - Ở cửa sổ **Store Dashboard**: **Chuông reo báo đơn mới vang lên**, banner thông báo xanh bật lên và đơn hàng mới xuất hiện tức thì ở trạng thái `CHỜ XÁC NHẬN` mà **không cần tải lại trang**!
+### Bước 2: Mô Phỏng Nút Bấm Vật Lý (ESP32 Simulator Bridge)
+1. Mở tab mới truy cập: `http://localhost:5173/simulator` (hoặc mở terminal chạy `cd simulator && npx tsx src/cli.ts`).
+2. Màn hình mô phỏng hiển thị hình ảnh nút bấm 3D kèm đèn LED và thông số pin LiPo (94%).
+3. **Nhấn vào nút tròn xanh "NHẤN NÚT (1)"**:
+   - ESP32 phát tín hiệu thức dậy (RTC Wakeup).
+   - Đèn LED chuyển **XANH DƯƠNG** (kết nối Wi-Fi) $\to$ **VÀNG** (ký HMAC-SHA256 và truyền dữ liệu).
+   - Cloud xác thực thành công $\to$ Đèn LED chuyển **XANH LÁ** (Thành công!).
+   - Hiệu ứng pháo hoa ăn mừng xuất hiện trên màn hình.
+   - Đồng thời, ở cửa sổ **Store Dashboard**: **Chuông reo báo đơn mới vang lên**, banner thông báo xanh bật lên và đơn hàng mới xuất hiện tức thì ở trạng thái `CHỜ XÁC NHẬN` mà **không cần tải lại trang**!
 
 ### Bước 3: Thử Nghiệm Cửa Sổ Hủy Đơn (60-Second Cancel Window)
 1. Đăng nhập tài khoản **"Khách Hàng"** (`customer@smartorder.local`) tại `http://localhost:5173/customer/home`.

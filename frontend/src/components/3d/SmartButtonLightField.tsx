@@ -22,23 +22,23 @@ export const SmartButtonLightField: React.FC<SmartButtonLightFieldProps> = ({
   // Colors and glow intensity tailored strictly to section 36.4 & 36.14 (soft, diffused, subtle)
   const config = {
     idle: {
-      colorLight: 'radial-gradient(circle, rgba(37, 99, 235, 0.22) 0%, rgba(6, 182, 212, 0.10) 45%, transparent 70%)',
-      colorDark: 'radial-gradient(circle, rgba(245, 158, 11, 0.32) 0%, rgba(234, 179, 8, 0.18) 45%, transparent 70%)',
-      opacity: 'opacity-80 dark:opacity-90',
-      pulse: false,
+      colorLight: 'radial-gradient(circle, rgba(37, 99, 235, 0.25) 0%, rgba(6, 182, 212, 0.12) 45%, transparent 70%)',
+      colorDark: 'radial-gradient(circle, rgba(239, 68, 68, 0.28) 0%, rgba(244, 63, 94, 0.14) 45%, transparent 70%)',
+      opacity: 'opacity-85 dark:opacity-90',
+      pulse: true,
       scale: 'scale-100',
     },
     press: {
-      colorLight: 'radial-gradient(circle, rgba(37, 99, 235, 0.35) 0%, rgba(6, 182, 212, 0.20) 50%, transparent 75%)',
-      colorDark: 'radial-gradient(circle, rgba(245, 158, 11, 0.45) 0%, rgba(234, 179, 8, 0.25) 50%, transparent 75%)',
-      opacity: 'opacity-90 dark:opacity-95',
+      colorLight: 'radial-gradient(circle, rgba(37, 99, 235, 0.40) 0%, rgba(6, 182, 212, 0.22) 50%, transparent 75%)',
+      colorDark: 'radial-gradient(circle, rgba(239, 68, 68, 0.45) 0%, rgba(244, 63, 94, 0.25) 50%, transparent 75%)',
+      opacity: 'opacity-95 dark:opacity-95',
       pulse: false,
       scale: 'scale-105',
     },
     connecting: {
-      colorLight: 'radial-gradient(circle, rgba(6, 182, 212, 0.28) 0%, rgba(245, 158, 11, 0.14) 45%, transparent 70%)',
-      colorDark: 'radial-gradient(circle, rgba(245, 158, 11, 0.35) 0%, rgba(234, 179, 8, 0.20) 45%, transparent 70%)',
-      opacity: 'opacity-85',
+      colorLight: 'radial-gradient(circle, rgba(6, 182, 212, 0.32) 0%, rgba(37, 99, 235, 0.18) 45%, transparent 70%)',
+      colorDark: 'radial-gradient(circle, rgba(244, 63, 94, 0.35) 0%, rgba(239, 68, 68, 0.22) 45%, transparent 70%)',
+      opacity: 'opacity-90',
       pulse: true,
       scale: 'scale-102',
     },

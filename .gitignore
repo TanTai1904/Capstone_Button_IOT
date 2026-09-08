@@ -1,15 +1,19 @@
+# =======================================================
+# Git Ignore - Smart Order Button IoT Platform
+# =======================================================
+
 # Dependencies
 node_modules/
 **/node_modules/
 .pnp
 .pnp.js
 
-# Environment variables
+# Environment Variables & Secrets (NEVER push to git)
 .env
 .env.*
 !.env.example
 
-# Build outputs & caches
+# Build Outputs & Compilation Caches
 dist/
 **/dist/
 build/
@@ -17,17 +21,38 @@ build/
 out/
 .next/
 .cache/
-*.local
-.dart_tool/
-**/.dart_tool/
+*.tsbuildinfo
+**/*.tsbuildinfo
 
-# Database & SQLite
+# Large Application Packages (Exceeds GitHub 100MB limit)
+*.apk
+*.aab
+*.ipa
+SmartOrder.apk
+
+# Database & SQLite Local Files
 *.db
 *.db-journal
 *.sqlite
 *.sqlite3
+backend/prisma/*.db
+backend/prisma/*.db-journal
 
-# Logs
+# Mobile / Flutter Build Artifacts
+.dart_tool/
+**/.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+mobile/android/.gradle/
+mobile/android/local.properties
+mobile/android/app/release/
+
+# Hardware & PlatformIO Build Artifacts
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# Logs & Debugging
 logs/
 *.log
 npm-debug.log*
@@ -35,14 +60,15 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Editor & OS files
+# Editor & System Files
 .vscode/
 .idea/
 *.swp
 *.swo
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# IDE & AI generated
+# AI Agents & IDE metadata
 .gemini/
 .agents/

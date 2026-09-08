@@ -24,7 +24,7 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
 
   const port = process.env.PORT || 5000;
-  await app.listen(port, '0.0.0.0');
+  await app.listen(port);
 
   console.log(`=======================================================`);
   console.log(`🚀 SMART ORDER BUTTON — NESTJS CLOUD & REALTIME CORE`);

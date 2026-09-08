@@ -131,11 +131,11 @@ export const LoginPage: React.FC = () => {
           <div>
             {/* Logo and Brand Pill */}
             <div className="flex items-center gap-3.5 mb-6">
-              <div className="relative w-12 h-12 rounded-2xl overflow-hidden shadow-xl border border-white/30 dark:border-red-500/40 p-0.5 bg-slate-950 shrink-0">
+              <div className="relative w-12 h-12 rounded-2xl overflow-hidden shadow-xl border border-white/25 dark:border-red-500/30 bg-slate-950 shrink-0">
                 <img
                   src={theme === 'dark' ? '/assets/logo-red.png' : '/assets/logo.png'}
                   alt="Smart Order"
-                  className="w-full h-full object-cover rounded-[13px] transition-all duration-300 dark:drop-shadow-[0_0_10px_rgba(239,68,68,0.55)]"
+                  className="w-full h-full object-cover transition-all duration-300 dark:drop-shadow-[0_0_10px_rgba(239,68,68,0.55)]"
                 />
               </div>
               <div>

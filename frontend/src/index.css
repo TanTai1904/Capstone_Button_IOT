@@ -11,6 +11,7 @@
     --color-card-foreground: #0f172a;
     --color-border: #e2e8f0;
     --color-accent: #06b6d4;
+    --glare-color: rgba(255, 255, 255, 0.45);
   }
 
   .dark {
@@ -21,6 +22,7 @@
     --color-card-foreground: #fafafa;
     --color-border: rgba(239, 68, 68, 0.22);
     --color-accent: #f43f5e;
+    --glare-color: rgba(244, 63, 94, 0.18);
   }
 
   body {
@@ -28,22 +30,104 @@
   }
 }
 
+/* Modern High-End Precision Engineering Grid */
+.bg-tech-grid {
+  background-size: 44px 44px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+}
+
+.dark .bg-tech-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+}
+
+/* Subtle Radial Vignette Mask for Background Grid */
+.mask-radial-vignette {
+  mask-image: radial-gradient(ellipse 80% 65% at 50% 12%, black 25%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 65% at 50% 12%, black 25%, transparent 85%);
+}
+
+/* Slow Ambient Breathing Animation for Background Auras */
+@keyframes ambientBreathe {
+  0%, 100% {
+    transform: scale(1) translate(0, 0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.08) translate(15px, -10px);
+    opacity: 1;
+  }
+}
+
+.animate-ambient-breathe {
+  animation: ambientBreathe 12s ease-in-out infinite;
+}
+
 /* Atmospheric Ambient Background (Synchronized Blue-White for Light & Red-Black for Dark) */
 .telemetry-grid {
   position: relative;
   background-color: transparent;
-  background-image: 
-    radial-gradient(ellipse at 50% -20%, rgba(37, 99, 235, 0.08), transparent 70%),
-    radial-gradient(circle at 10% 20%, rgba(6, 182, 212, 0.05), transparent 40%),
-    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.04), transparent 40%);
 }
 
-.dark .telemetry-grid {
-  background-color: transparent;
-  background-image: 
-    radial-gradient(ellipse at 50% -20%, rgba(239, 68, 68, 0.16), transparent 70%),
-    radial-gradient(circle at 10% 20%, rgba(220, 38, 38, 0.08), transparent 45%),
-    radial-gradient(circle at 90% 80%, rgba(185, 28, 28, 0.06), transparent 45%);
+/* Shimmering Animated Gradient Text */
+@keyframes gradientShimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient-shimmer {
+  background-size: 200% auto;
+  animation: gradientShimmer 5s ease infinite;
+}
+
+/* Gentle Organic 3D Levitation */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(0.6deg);
+  }
+}
+
+.animate-float-gentle {
+  animation: floatGentle 5s ease-in-out infinite;
+}
+
+/* Breathing Glow Pulse */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.95;
+    transform: scale(1.05);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 3.5s ease-in-out infinite;
+}
+
+/* Dynamic Border Beam */
+@keyframes borderBeam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
 }
 
 /* 3D Smart Button Cap Idle State (Light = Blue & White, Dark = Cyber Red & Obsidian Black) */
@@ -54,16 +138,16 @@
   background: radial-gradient(circle at 35% 35%, #ef4444 0%, #b91c1c 55%, #08080a 100%);
 }
 
-/* Subtle micro-dot matrix with smooth vignette (optional high-tech feel) */
+/* Subtle micro-dot matrix with smooth vignette */
 .dot-matrix-bg {
-  background-image: radial-gradient(rgba(148, 163, 184, 0.22) 1px, transparent 1px);
-  background-size: 24px 24px;
-  mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 40%, transparent 85%);
+  background-image: radial-gradient(rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+  background-size: 28px 28px;
+  mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 50%, black 30%, transparent 80%);
 }
 
 .dark .dot-matrix-bg {
-  background-image: radial-gradient(rgba(239, 68, 68, 0.15) 1px, transparent 1px);
+  background-image: radial-gradient(rgba(239, 68, 68, 0.09) 1px, transparent 1px);
 }
 
 /* Glassmorphism Panels */

@@ -1,155 +1,227 @@
 import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
-import { Radio, LogOut, Shield, Store, Smartphone, Cpu, Sun, Moon, Activity, Wifi } from 'lucide-react';
+import { LogOut, Shield, Store, Smartphone, Sun, Moon, Wifi, CheckCircle2, User as UserIcon } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const isActive = (path: string) => location.pathname === path;
+
+  const getRoleBadge = (role: string) => {
+    switch (role) {
+      case 'SUPER_ADMIN':
+        return { label: 'Admin Hub', color: 'bg-purple-500/10 text-purple-600 dark:text-purple-400 border-purple-500/20' };
+      case 'STORE_OWNER':
+        return { label: 'Chủ Cửa Hàng', color: 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border-blue-500/20' };
+      case 'STORE_MANAGER':
+      case 'STORE_STAFF':
+        return { label: 'Nhân Viên Cửa Hàng', color: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/20' };
+      case 'TECHNICIAN':
+        return { label: 'Kỹ Thuật Viên', color: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/20' };
+      case 'CUSTOMER':
+      default:
+        return { label: 'Khách Hàng', color: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/20' };
+    }
+  };
+
+  const getInitials = (name?: string) => {
+    if (!name) return 'U';
+    const parts = name.trim().split(' ');
+    if (parts.length === 1) return parts[0].charAt(0).toUpperCase();
+    return (parts[0].charAt(0) + parts[parts.length - 1].charAt(0)).toUpperCase();
+  };
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 dark:bg-[#08080A]/90 backdrop-blur-xl border-b border-slate-200/80 dark:border-red-500/20 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Brand Logo & Slogan */}
-        <div className="flex items-center space-x-3">
-          <Link to="/" className="flex items-center space-x-3 group">
-            <div className="relative w-10 h-10 rounded-xl overflow-hidden shadow-md shadow-blue-500/20 dark:shadow-red-600/40 border border-blue-500/30 dark:border-red-500/50 group-hover:scale-105 transition-all bg-slate-950 flex items-center justify-center p-0.5">
+    <header className="sticky top-0 z-50 bg-white/95 dark:bg-[#09090B]/95 backdrop-blur-md border-b border-slate-200/90 dark:border-zinc-800 transition-colors">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+        
+        {/* ================================================================= */}
+        {/* LEFT: Clean Brand + Core Navigation Links                         */}
+        {/* ================================================================= */}
+        <div className="flex items-center gap-6 shrink-0">
+          {/* Brand Logo & Name */}
+          <Link to="/" className="flex items-center gap-2.5 group">
+            <div className="w-9 h-9 rounded-xl overflow-hidden shadow-sm border border-slate-200 dark:border-zinc-800 group-hover:scale-105 group-hover:shadow-md transition-all bg-zinc-950 flex items-center justify-center shrink-0">
               <img
                 src={theme === 'dark' ? '/assets/logo-red.png' : '/assets/logo.png'}
                 alt="Smart Order"
-                className="w-full h-full object-cover rounded-[9px] transition-all duration-300 dark:drop-shadow-[0_0_8px_rgba(239,68,68,0.5)]"
+                className="w-full h-full object-cover transition-all"
               />
             </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="text-base font-extrabold tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-red-400 transition-colors">
-                  SMART ORDER
-                </span>
-                <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-blue-50 dark:bg-red-500/15 text-blue-700 dark:text-red-400 border border-blue-200 dark:border-red-500/30">
-                  IoT v2.0
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-500 dark:text-slate-400 hidden sm:flex items-center gap-1.5 font-medium">
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-blue-500 dark:bg-red-500 animate-pulse"></span>
-                Một nút bấm vật lý — Tự động hóa chuỗi cung ứng
-              </p>
+            <div className="flex items-center gap-2">
+              <span className="text-base font-extrabold tracking-tight text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-red-400 transition-colors">
+                SMART ORDER
+              </span>
+              <span className="text-[10px] font-mono font-bold px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-zinc-800 text-slate-600 dark:text-zinc-400 border border-slate-200 dark:border-zinc-700">
+                v2.0
+              </span>
             </div>
           </Link>
-        </div>
 
-        {/* Action Center & Role View */}
-        <div className="flex items-center space-x-2 sm:space-x-3">
-          {/* Live Node Pulse Badge (Desktop) */}
-          <div className="hidden lg:flex items-center space-x-2 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-900/90 border border-slate-200 dark:border-red-500/20 text-[11px] font-mono text-slate-600 dark:text-slate-300">
-            <Wifi className="w-3.5 h-3.5 text-emerald-500" />
-            <span>CLOUD EDGE: <strong className="text-emerald-600 dark:text-emerald-400">LIVE</strong></span>
-            <span className="text-slate-400 dark:text-slate-600">•</span>
-            <span className="text-slate-500 dark:text-slate-400">&lt;18ms</span>
-          </div>
-
-          {/* Quick Wi-Fi Setup Shortcut */}
-          <Link
-            to="/quick-setup"
-            className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-gradient-to-r dark:from-red-600 dark:via-red-500 dark:to-rose-600 dark:hover:from-red-500 dark:hover:to-rose-500 rounded-xl shadow-sm shadow-blue-500/20 dark:shadow-red-600/30 transition-all btn-press"
-            title="Cài đặt Wi-Fi cho nút bấm không cần đăng nhập"
-          >
-            <Wifi className="w-3.5 h-3.5" />
-            <span>Cài Wi-Fi Nút Bấm</span>
-          </Link>
-
-          {/* Light / Dark Mode Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-zinc-800/80 border border-transparent hover:border-slate-200 dark:hover:border-red-500/20 transition-all"
-            title={theme === 'dark' ? 'Chuyển sang chế độ Sáng (Xanh-Trắng)' : 'Chuyển sang chế độ Tối (Đỏ-Đen)'}
-            aria-label="Toggle theme"
-          >
-            {theme === 'dark' ? (
-              <Sun className="w-4 h-4 text-red-400 rotate-0 transition-transform" />
-            ) : (
-              <Moon className="w-4 h-4 text-slate-700 transition-transform" />
-            )}
-          </button>
-
-          {user ? (
-            <div className="flex items-center space-x-2 sm:space-x-3">
-              {/* Navigation links based on role - Unified Brand Styling */}
-              {['STORE_OWNER', 'STORE_MANAGER', 'STORE_STAFF'].includes(user.role) && (
-                <Link
-                  to="/store/dashboard"
-                  className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-red-600 dark:hover:bg-red-700 rounded-xl shadow-sm shadow-blue-500/20 dark:shadow-red-600/30 transition-all btn-press"
-                >
-                  <Store className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Cửa Hàng</span>
-                </Link>
-              )}
-
+          {/* Primary Nav Links based on login role */}
+          {user && (
+            <nav className="hidden md:flex items-center gap-1 pl-3 border-l border-slate-200 dark:border-zinc-800">
               {user.role === 'CUSTOMER' && (
                 <Link
                   to="/customer/home"
-                  className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-red-600 dark:hover:bg-red-700 rounded-xl shadow-sm shadow-blue-500/20 dark:shadow-red-600/30 transition-all btn-press"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                    isActive('/customer/home')
+                      ? 'bg-blue-50 dark:bg-red-500/15 text-blue-600 dark:text-red-400 border border-blue-200/80 dark:border-red-500/30'
+                      : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/60'
+                  }`}
                 >
                   <Smartphone className="w-3.5 h-3.5" />
                   <span>Nút Của Tôi</span>
                 </Link>
               )}
 
+              {['STORE_OWNER', 'STORE_MANAGER', 'STORE_STAFF'].includes(user.role) && (
+                <>
+                  <Link
+                    to="/store/dashboard"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                      isActive('/store/dashboard')
+                        ? 'bg-blue-50 dark:bg-red-500/15 text-blue-600 dark:text-red-400 border border-blue-200/80 dark:border-red-500/30'
+                        : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/60'
+                    }`}
+                  >
+                    <Store className="w-3.5 h-3.5" />
+                    <span>Quản Lý Cửa Hàng</span>
+                  </Link>
+                  <Link
+                    to="/store/devices"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                      isActive('/store/devices')
+                        ? 'bg-blue-50 dark:bg-red-500/15 text-blue-600 dark:text-red-400 border border-blue-200/80 dark:border-red-500/30'
+                        : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/60'
+                    }`}
+                  >
+                    <span>Thiết Bị</span>
+                  </Link>
+                </>
+              )}
+
               {user.role === 'SUPER_ADMIN' && (
                 <Link
                   to="/admin/dashboard"
-                  className="flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-red-600 dark:hover:bg-red-700 rounded-xl shadow-sm shadow-blue-500/20 dark:shadow-red-600/30 transition-all btn-press"
+                  className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold rounded-lg transition-all ${
+                    isActive('/admin/dashboard')
+                      ? 'bg-blue-50 dark:bg-red-500/15 text-blue-600 dark:text-red-400 border border-blue-200/80 dark:border-red-500/30'
+                      : 'text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800/60'
+                  }`}
                 >
                   <Shield className="w-3.5 h-3.5" />
                   <span>Admin Hub</span>
                 </Link>
               )}
+            </nav>
+          )}
+        </div>
 
-              {/* User Dropdown / Info - Synchronized Badge */}
-              <div className="flex items-center pl-2 sm:pl-3 border-l border-slate-200 dark:border-white/10 space-x-2">
-                <div className="text-right hidden sm:block">
-                  <p className="text-xs font-bold text-slate-900 dark:text-white leading-tight flex items-center justify-end gap-1.5">
-                    <span>{user.fullName}</span>
-                    {user.emailVerified ? (
-                      <span className="text-[9px] px-1.5 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-mono font-bold border border-emerald-500/20" title="Email đã xác thực">✓ ĐÃ XÁC THỰC</span>
-                    ) : (
-                      <Link to="/verify-email" className="text-[9px] px-1.5 py-0.5 rounded-md bg-amber-500/15 text-amber-600 dark:text-amber-400 font-mono font-bold border border-amber-500/20 hover:underline" title="Chưa kích hoạt email - Bấm để kích hoạt">CHƯA XÁC THỰC</Link>
-                    )}
-                  </p>
-                  <p className="text-[10px] font-mono text-blue-600 dark:text-red-400 font-semibold mt-0.5">
-                    {user.username ? `@${user.username}` : user.role}
-                  </p>
-                </div>
-                <button
-                  onClick={() => {
-                    logout();
-                    navigate('/login');
-                  }}
-                  className="p-2 text-slate-400 hover:text-red-500 rounded-xl hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors"
-                  title="Đăng xuất"
-                >
-                  <LogOut className="w-4 h-4" />
-                </button>
+        {/* ================================================================= */}
+        {/* RIGHT: Utilities, Status & User Account                           */}
+        {/* ================================================================= */}
+        <div className="flex items-center gap-2 sm:gap-3">
+          
+          {/* Live Edge Status indicator (compact & clean) */}
+          <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-100 dark:bg-zinc-900 border border-slate-200 dark:border-zinc-800 text-[11px] font-mono text-slate-600 dark:text-zinc-400">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span>CLOUD EDGE: <strong className="text-emerald-600 dark:text-emerald-400">LIVE</strong></span>
+            <span className="text-slate-300 dark:text-zinc-700">|</span>
+            <span>&lt;8ms</span>
+          </div>
+
+          {/* Quick Wi-Fi Setup shortcut (subtle secondary style) */}
+          <Link
+            to="/quick-setup"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-zinc-300 bg-slate-100 hover:bg-slate-200 dark:bg-zinc-800/70 dark:hover:bg-zinc-800 border border-slate-200 dark:border-zinc-700 rounded-lg transition-all"
+            title="Cài đặt Wi-Fi cho nút bấm"
+          >
+            <Wifi className="w-3.5 h-3.5 text-blue-600 dark:text-red-400" />
+            <span className="hidden sm:inline">Cài Wi-Fi</span>
+          </Link>
+
+
+          {/* Dark/Light Mode Toggle */}
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg text-slate-600 dark:text-zinc-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
+            title={theme === 'dark' ? 'Chuyển sang Giao diện Sáng' : 'Chuyển sang Giao diện Tối'}
+            aria-label="Toggle theme"
+          >
+            {theme === 'dark' ? (
+              <Sun className="w-4 h-4 text-amber-400" />
+            ) : (
+              <Moon className="w-4 h-4 text-slate-700" />
+            )}
+          </button>
+
+          {/* User Account / Auth Section */}
+          {user ? (
+            <div className="flex items-center gap-2.5 pl-2 sm:pl-3 border-l border-slate-200 dark:border-zinc-800">
+              {/* User Avatar with Initials */}
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 dark:from-red-600 dark:to-rose-600 text-white flex items-center justify-center font-mono font-bold text-xs shadow-sm shrink-0">
+                {getInitials(user.fullName)}
               </div>
+
+              {/* User Name & Role Info */}
+              <div className="text-left hidden sm:block">
+                <div className="flex items-center gap-1.5 leading-none">
+                  <span className="text-xs font-bold text-slate-900 dark:text-white truncate max-w-[130px]">
+                    {user.fullName}
+                  </span>
+                  {user.emailVerified && (
+                    <span title="Email đã xác thực">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-500 shrink-0" />
+                    </span>
+                  )}
+                </div>
+                <div className="flex items-center gap-1.5 mt-1">
+                  <span className={`text-[9px] font-mono font-semibold px-1.5 py-0.2 rounded border ${getRoleBadge(user.role).color}`}>
+                    {getRoleBadge(user.role).label}
+                  </span>
+                  <span className="text-[10px] text-slate-400 dark:text-zinc-500 font-mono">
+                    @{user.username || 'user'}
+                  </span>
+                </div>
+              </div>
+
+              {/* Logout Button */}
+              <button
+                onClick={() => {
+                  logout();
+                  navigate('/login');
+                }}
+                className="p-1.5 text-slate-400 hover:text-red-600 dark:hover:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors ml-1"
+                title="Đăng xuất"
+              >
+                <LogOut className="w-4 h-4" />
+              </button>
             </div>
           ) : (
-            <div className="flex items-center space-x-2.5">
+            <div className="flex items-center gap-2 pl-2 border-l border-slate-200 dark:border-zinc-800">
               <Link
                 to="/login"
-                className="px-3.5 py-2 text-xs font-bold text-slate-700 dark:text-zinc-200 hover:text-blue-600 dark:hover:text-amber-300 rounded-xl hover:bg-slate-100 dark:hover:bg-zinc-800/90 transition-all border border-transparent hover:border-slate-200 dark:hover:border-amber-500/20"
+                className="px-3 py-1.5 text-xs font-semibold text-slate-700 dark:text-zinc-300 hover:text-blue-600 dark:hover:text-white rounded-lg hover:bg-slate-100 dark:hover:bg-zinc-800 transition-colors"
               >
                 Đăng nhập
               </Link>
               <Link
                 to="/register"
-                className="px-4 py-2 text-xs font-bold text-white dark:text-black bg-gradient-to-r from-blue-600 via-indigo-600 to-blue-600 hover:from-blue-700 hover:to-indigo-700 dark:from-amber-500 dark:via-yellow-400 dark:to-amber-600 dark:hover:from-amber-400 dark:hover:to-yellow-300 rounded-xl shadow-md shadow-blue-500/20 dark:shadow-amber-500/25 hover:shadow-blue-500/30 transition-all btn-press"
+                className="px-3.5 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 dark:bg-red-600 dark:hover:bg-red-700 rounded-lg shadow-sm transition-colors"
               >
-                Đăng ký ngay
+                Đăng ký
               </Link>
             </div>
           )}
+
         </div>
+
       </div>
     </header>
   );

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Radio, ArrowRight, Shield, Zap, Battery, CheckCircle2, ShoppingBag, Smartphone, Cpu, Sparkles, Activity, Layers, Lock, Wifi, RefreshCw, Droplets, Flame, Wheat, Package } from 'lucide-react';
+import { Radio, ArrowRight, Shield, Zap, Battery, CheckCircle2, ShoppingBag, Smartphone, Sparkles, Activity, Layers, Lock, Wifi, RefreshCw, Droplets, Flame, Wheat, Package } from 'lucide-react';
 import confetti from 'canvas-confetti';
+import { useTheme } from '../context/ThemeContext';
 import { Interactive3DButton } from '../components/3d/Interactive3DButton';
 import { Floating3DCard } from '../components/3d/Floating3DCard';
 import { NetworkSignalFlow } from '../components/3d/NetworkSignalFlow';
-import { useTheme } from '../context/ThemeContext';
 
 export const LandingPage: React.FC = () => {
   const { theme } = useTheme();
@@ -83,24 +83,21 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-transparent text-slate-900 dark:text-slate-100 telemetry-grid transition-colors">
+    <div className="min-h-screen bg-transparent text-slate-900 dark:text-slate-100 transition-colors relative">
       {/* Hero Section */}
-      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-32 border-b border-slate-200/80 dark:border-red-500/20">
-        {/* Subtle Ambient Radial Glows */}
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-gradient-to-tr from-cyan-500/10 via-blue-600/10 to-indigo-600/5 dark:from-red-600/20 dark:via-rose-600/10 dark:to-transparent blur-[120px] pointer-events-none rounded-full"></div>
-
+      <section className="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28 border-b border-slate-200/80 dark:border-red-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             {/* Left Column: Tech Hero Value Proposition */}
             <div className="lg:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200 dark:bg-red-950/60 dark:text-red-300 dark:border-red-500/35 text-xs font-mono font-bold shadow-sm">
+              <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-blue-50/90 text-blue-700 border border-blue-200/90 dark:bg-red-950/60 dark:text-red-300 dark:border-red-500/40 text-xs font-mono font-bold shadow-sm backdrop-blur-md">
                 <span className="w-2 h-2 rounded-full bg-blue-600 dark:bg-red-500 animate-ping"></span>
                 <span>NỀN TẢNG IoT THƯƠNG MẠI THẾ HỆ MỚI</span>
               </div>
 
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-slate-900 dark:text-white leading-[1.12]">
                 Một nút bấm vật lý. <br />
-                <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 dark:from-red-500 dark:via-rose-400 dark:to-red-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-blue-600 via-cyan-500 to-indigo-600 dark:from-red-500 dark:via-rose-400 dark:to-red-600 bg-clip-text text-transparent animate-gradient-shimmer">
                   Đặt đúng thứ cần,
                 </span>{' '}
                 chuẩn xác tức thì.
@@ -110,7 +107,7 @@ export const LandingPage: React.FC = () => {
                 Giải pháp nút bấm IoT vật lý tiết kiệm pin thông minh kết nối khách hàng trực tiếp với đại lý nước uống 20L, gas, gạo và nhu yếu phẩm. Loại bỏ hoàn toàn phiền toái mở app, tìm kiếm hay gọi điện thoại mỗi lần hết đồ.
               </p>
 
-              {/* Action Buttons - Unified Brand Color Palette */}
+              {/* Action Buttons */}
               <div className="flex flex-wrap gap-3.5 pt-2">
                 <Link
                   to="/quick-setup"
@@ -122,89 +119,110 @@ export const LandingPage: React.FC = () => {
                 </Link>
                 <Link
                   to="/register"
-                  className="px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-slate-800 dark:text-zinc-200 font-bold text-sm border border-slate-200 dark:border-red-500/20 shadow-sm transition-all"
+                  className="px-6 py-3.5 rounded-xl bg-white/90 hover:bg-slate-50 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 text-slate-800 dark:text-zinc-200 font-bold text-sm border border-slate-200 dark:border-red-500/20 shadow-sm transition-all backdrop-blur-md"
                 >
                   Đăng Ký Đại Lý
                 </Link>
               </div>
 
+              {/* Dynamic Live IoT Telemetry Ribbon */}
+              <div className="flex flex-wrap items-center gap-2.5 sm:gap-3 px-4 py-2.5 rounded-2xl bg-slate-100/80 dark:bg-zinc-900/70 border border-slate-200/80 dark:border-red-500/20 text-[11px] font-mono backdrop-blur-xl shadow-sm">
+                <span className="flex h-2 w-2 relative shrink-0">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 dark:bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 dark:bg-red-500"></span>
+                </span>
+                <span className="text-slate-700 dark:text-zinc-200 font-bold">
+                  EDGE BROKER ONLINE
+                </span>
+                <span className="text-slate-300 dark:text-zinc-700 hidden sm:inline">•</span>
+                <span className="text-slate-500 dark:text-zinc-400">
+                  Độ trễ: <strong className="text-emerald-600 dark:text-rose-400 font-semibold">&lt;8ms</strong>
+                </span>
+                <span className="text-slate-300 dark:text-zinc-700 hidden md:inline">•</span>
+                <span className="text-slate-500 dark:text-zinc-400 hidden md:inline">
+                  Mã hóa: <strong className="text-blue-600 dark:text-red-400 font-semibold">HMAC-SHA256</strong>
+                </span>
+                <span className="text-slate-300 dark:text-zinc-700 hidden lg:inline">•</span>
+                <span className="text-slate-500 dark:text-zinc-400 hidden lg:inline">
+                  Sleep: <strong className="text-cyan-600 dark:text-rose-400 font-semibold">&lt;15µA</strong>
+                </span>
+              </div>
+
               {/* Hardware Highlights Cards */}
-              <div className="grid grid-cols-3 gap-3 pt-6 border-t border-slate-200/80 dark:border-red-500/20">
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-red-500/20">
+              <div className="grid grid-cols-3 gap-3 pt-4 border-t border-slate-200/80 dark:border-red-500/20">
+                <div className="p-3 rounded-2xl bg-white/80 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-red-500/20 hover:border-cyan-500/40 dark:hover:border-red-500/40 transition-all shadow-sm">
                   <div className="flex items-center space-x-1.5 text-xs font-mono text-cyan-600 dark:text-red-400 font-bold">
                     <Battery className="w-3.5 h-3.5" />
                     <span>&lt; 15µA</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-medium">Dòng Deep Sleep tiết kiệm pin 12-18 tháng</p>
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-medium">Pin bền 12-18 tháng</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-red-500/20">
+                <div className="p-3 rounded-2xl bg-white/80 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-red-500/20 hover:border-blue-500/40 dark:hover:border-rose-400/40 transition-all shadow-sm">
                   <div className="flex items-center space-x-1.5 text-xs font-mono text-blue-600 dark:text-rose-400 font-bold">
                     <Zap className="w-3.5 h-3.5" />
                     <span>&lt; 1.8s</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-medium">Bắt tay Wi-Fi & gửi đơn đến Cloud Broker</p>
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-medium">Bắt tay gửi đơn tức thì</p>
                 </div>
-                <div className="p-3 rounded-xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-red-500/20">
+                <div className="p-3 rounded-2xl bg-white/80 dark:bg-zinc-900/80 border border-slate-200/80 dark:border-red-500/20 hover:border-indigo-500/40 dark:hover:border-red-500/40 transition-all shadow-sm">
                   <div className="flex items-center space-x-1.5 text-xs font-mono text-indigo-600 dark:text-red-400 font-bold">
                     <Shield className="w-3.5 h-3.5" />
                     <span>HMAC-SHA256</span>
                   </div>
-                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-medium">Bảo mật phần cứng chống gian lận & spam đơn</p>
+                  <p className="text-[11px] text-slate-500 dark:text-zinc-400 mt-1 font-medium">Chống giả mạo độc bản</p>
                 </div>
               </div>
             </div>
 
             {/* Right Column: Interactive 3D Hardware Smart Button */}
             <div className="lg:col-span-5 flex flex-col items-center justify-center relative">
-              {/* 3D Floating Hardware Showcase */}
-              <Floating3DCard
-                maxTilt={12}
-                className="w-full max-w-md bg-white/90 dark:bg-[#0E0E12]/95 backdrop-blur-2xl border border-blue-100 dark:border-red-500/30 rounded-3xl p-6 sm:p-8 shadow-3d-card text-center relative z-10"
-              >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 dark:bg-red-500/15 dark:border-red-500/30 text-[10px] font-mono font-bold text-blue-600 dark:text-red-400">
-                    <img
-                      src={theme === 'dark' ? '/assets/logo-red.png' : '/assets/logo.png'}
-                      alt="Logo"
-                      className="w-3.5 h-3.5 rounded object-cover transition-all duration-300 dark:drop-shadow-[0_0_6px_rgba(239,68,68,0.6)]"
-                    />
-                    <span>ESP32-3D HARDWARE</span>
+              {/* Hardware Showcase Card */}
+              <div className="w-full flex justify-center">
+                <Floating3DCard
+                  className="w-full max-w-md bg-white dark:bg-[#0E0E12] border border-slate-200 dark:border-red-500/20 rounded-3xl p-6 sm:p-8 shadow-xl text-center relative z-10"
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 dark:bg-red-500/15 dark:border-red-500/30 text-[10px] font-mono font-bold text-blue-600 dark:text-red-400">
+                      <img
+                        src={theme === 'dark' ? '/assets/logo-red.png' : '/assets/logo.png'}
+                        alt="Logo"
+                        className="w-3.5 h-3.5 rounded object-cover transition-all duration-300 dark:drop-shadow-[0_0_6px_rgba(239,68,68,0.6)]"
+                      />
+                      <span>ESP32 HARDWARE</span>
+                    </div>
+                    <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 dark:bg-red-500/15 dark:border-red-500/30 text-[10px] font-mono font-bold text-emerald-600 dark:text-red-400">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-red-500 animate-ping"></span>
+                      <span>ONLINE • 98% PIN</span>
+                    </div>
                   </div>
-                  <div className="flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 dark:bg-red-500/15 dark:border-red-500/30 text-[10px] font-mono font-bold text-emerald-600 dark:text-red-400">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 dark:bg-red-500 animate-ping"></span>
-                    <span>ONLINE • 98% PIN</span>
+
+                  <div className="mb-4">
+                    <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-zinc-500">Mã Thiết Bị: SOB-8829-WTR</p>
+                    <h3 className="text-base font-extrabold text-slate-900 dark:text-white mt-0.5">Nút Nước Khoáng Lavie 20L</h3>
                   </div>
-                </div>
 
-                <div className="mb-4">
-                  <p className="text-[10px] font-mono uppercase tracking-widest text-slate-400 dark:text-zinc-500">Mã Thiết Bị: SOB-8829-WTR</p>
-                  <h3 className="text-base font-extrabold text-slate-900 dark:text-white mt-0.5">Nút Nước Khoáng Lavie 20L (3D Model)</h3>
-                </div>
+                  {/* Clean Hardware Button */}
+                  <div className="py-2">
+                    <Interactive3DButton size="lg" />
+                  </div>
 
-                {/* The 3D Interactive Physical Button Component (36.4 & 36.7) */}
-                <div className="py-2">
-                  <Interactive3DButton size="lg" showTelemetry={true} showCircularHalo={true} />
-                </div>
-
-                {/* Hardware Gestures Micro-Legend */}
-                <div className="mt-4 p-2.5 rounded-xl bg-slate-50 dark:bg-zinc-900/80 border border-slate-200/60 dark:border-red-500/20 text-[10px] text-slate-500 dark:text-zinc-400 flex items-center justify-between">
-                  <span><strong className="text-blue-600 dark:text-red-400 font-mono">1 Click:</strong> Bật nguồn</span>
-                  <span className="text-slate-300 dark:text-zinc-700">•</span>
-                  <span><strong className="text-blue-600 dark:text-rose-400 font-mono">2 Clicks:</strong> Đặt / Hủy đơn</span>
-                  <span className="text-slate-300 dark:text-zinc-700">•</span>
-                  <span><strong className="text-indigo-600 dark:text-red-400 font-mono">Giữ 5s:</strong> Đổi Wi-Fi</span>
-                </div>
-              </Floating3DCard>
+                  {/* Hardware Gestures Micro-Legend */}
+                  <div className="mt-4 p-2.5 rounded-xl bg-slate-50/90 dark:bg-zinc-900/80 border border-slate-200/60 dark:border-red-500/20 text-[10px] text-slate-500 dark:text-zinc-400 flex items-center justify-between">
+                    <span><strong className="text-blue-600 dark:text-red-400 font-mono">1 Click:</strong> Bật nguồn</span>
+                    <span className="text-slate-300 dark:text-zinc-700">•</span>
+                    <span><strong className="text-blue-600 dark:text-rose-400 font-mono">2 Clicks:</strong> Đặt / Hủy</span>
+                    <span className="text-slate-300 dark:text-zinc-700">•</span>
+                    <span><strong className="text-indigo-600 dark:text-red-400 font-mono">Giữ 5s:</strong> Đổi Wi-Fi</span>
+                  </div>
+                </Floating3DCard>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* How It Works - 4 Hardware & Edge Steps with 36.3 & 36.8 Network Signal Animation */}
+      {/* How It Works - 4 Hardware & Edge Steps with Dynamic Network Signal Animation */}
       <section className="py-20 border-b border-slate-200/80 dark:border-red-500/20 relative overflow-hidden">
-        {/* Soft technical grid background for Section 36.8 */}
-        <div className="absolute inset-0 dot-matrix-bg opacity-30 pointer-events-none" />
-
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="text-center max-w-3xl mx-auto mb-10">
             <h2 className="text-xs font-mono font-bold text-blue-600 dark:text-red-400 uppercase tracking-widest">Quy Trình Tự Động Hóa</h2>
@@ -214,7 +232,7 @@ export const LandingPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Section 36.3 & 36.8: Network Signal Pipeline linking 5 IoT Nodes */}
+          {/* Section 36.3 & 36.8: Network Signal Pipeline with Auto-Cycling */}
           <NetworkSignalFlow
             activeStep={activeFlowStep}
             onStepClick={(s) => setActiveFlowStep(s)}
