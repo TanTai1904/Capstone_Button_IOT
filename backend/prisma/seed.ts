@@ -4,20 +4,13 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('🌱 Clearing existing database tables...');
-  await prisma.auditLog.deleteMany();
-  await prisma.idempotencyRecord.deleteMany();
-  await prisma.orderItem.deleteMany();
-  await prisma.order.deleteMany();
-  await prisma.deviceTelemetry.deleteMany();
-  await prisma.deviceEvent.deleteMany();
-  await prisma.deviceConfiguration.deleteMany();
-  await prisma.device.deleteMany();
-  await prisma.product.deleteMany();
-  await prisma.customerProfile.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.store.deleteMany();
+  const userCount = await prisma.user.count().catch(() => 0);
+  if (userCount > 0) {
+    console.log('✅ Database already initialized with users. Skipping seed.');
+    return;
+  }
 
+  console.log('🌱 Database is empty. Seeding initial data...');
   const passwordHash = await bcrypt.hash('Password123!', 10);
 
   console.log('🏪 Creating Stores...');
