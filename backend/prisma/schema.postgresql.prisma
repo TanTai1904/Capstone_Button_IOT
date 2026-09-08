@@ -7,56 +7,44 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum Role {
-  SUPER_ADMIN
-  STORE_OWNER
-  STORE_MANAGER
-  STORE_STAFF
-  CUSTOMER
-  TECHNICIAN
-}
-
-enum StoreStatus {
-  PENDING_APPROVAL
-  ACTIVE
-  SUSPENDED
-  REJECTED
-}
-
-enum DeviceStatus {
-  MANUFACTURED
-  UNCLAIMED
-  CLAIMED
-  ASSIGNED
-  ACTIVE
-  DISABLED
-  MAINTENANCE
-}
-
-enum OrderStatus {
-  PENDING
-  CONFIRMED
-  PREPARING
-  OUT_FOR_DELIVERY
-  COMPLETED
-  CANCELLED
-  REJECTED
-}
-
 model User {
-  id              String           @id @default(uuid())
-  email           String           @unique
-  passwordHash    String
-  fullName        String
-  phone           String?
-  role            Role             @default(CUSTOMER)
-  isActive        Boolean          @default(true)
-  storeId         String?
-  store           Store?           @relation(fields: [storeId], references: [id])
-  customerProfile CustomerProfile?
-  auditLogs       AuditLog[]
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
+  id                        String           @id @default(uuid())
+  email                     String           @unique
+  username                  String?          @unique
+  passwordHash              String
+  fullName                  String
+  phone                     String?
+  role                      String           @default("CUSTOMER") // SUPER_ADMIN, STORE_OWNER, STORE_MANAGER, STORE_STAFF, CUSTOMER, TECHNICIAN
+  isActive                  Boolean          @default(true)
+  emailVerified             Boolean          @default(false)
+  emailVerificationToken    String?
+  emailVerificationExpires  DateTime?
+  passwordResetTokenHash    String?
+  passwordResetExpires      DateTime?
+  failedLoginAttempts       Int              @default(0)
+  lockedUntil               DateTime?
+  lastLoginAt               DateTime?
+  storeId                   String?
+  store                     Store?           @relation(fields: [storeId], references: [id])
+  customerProfile           CustomerProfile?
+  refreshSessions           RefreshSession[]
+  auditLogs                 AuditLog[]
+  createdAt                 DateTime         @default(now())
+  updatedAt                 DateTime         @updatedAt
+}
+
+model RefreshSession {
+  id        String    @id @default(uuid())
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  ipAddress String?
+  userAgent String?
+
+  @@index([userId])
 }
 
 model Store {
@@ -67,12 +55,13 @@ model Store {
   phone           String
   email           String
   address         String
-  status          StoreStatus       @default(PENDING_APPROVAL)
+  status          String            @default("PENDING_APPROVAL") // PENDING_APPROVAL, ACTIVE, SUSPENDED, REJECTED
   rejectionReason String?
   approvedAt      DateTime?
   users           User[]
   products        Product[]
   devices         Device[]
+  deviceTemplates DeviceTemplate[]
   customers       CustomerProfile[]
   orders          Order[]
   createdAt       DateTime          @default(now())
@@ -80,11 +69,11 @@ model Store {
 }
 
 model CustomerProfile {
-  id              String    @id @default(uuid())
-  userId          String    @unique
-  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String                 @id @default(uuid())
+  userId          String                 @unique
+  user            User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
   storeId         String
-  store           Store     @relation(fields: [storeId], references: [id])
+  store           Store                  @relation(fields: [storeId], references: [id])
   apartment       String?
   building        String?
   floor           String?
@@ -92,64 +81,127 @@ model CustomerProfile {
   deliveryAddress String
   phone           String
   devices         Device[]
+  pairingSessions DevicePairingSession[]
   orders          Order[]
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  createdAt       DateTime               @default(now())
+  updatedAt       DateTime               @updatedAt
 }
 
 model Product {
-  id            String                @id @default(uuid())
-  storeId       String
-  store         Store                 @relation(fields: [storeId], references: [id])
-  name          String
-  brand         String
-  sku           String
-  category      String
-  unit          String
-  price         Decimal               @db.Decimal(12, 2)
-  stock         Int                   @default(0)
-  reservedStock Int                   @default(0)
-  minStockAlert Int                   @default(5)
-  imageUrl      String?
-  isActive      Boolean               @default(true)
-  deviceConfigs DeviceConfiguration[]
-  orderItems    OrderItem[]
-  createdAt     DateTime              @default(now())
-  updatedAt     DateTime              @updatedAt
+  id              String                @id @default(uuid())
+  storeId         String
+  store           Store                 @relation(fields: [storeId], references: [id])
+  name            String
+  brand           String
+  sku             String
+  description     String?
+  category        String // "Nước uống", "Gas", "Gạo", "Sữa", "Nhu yếu phẩm"
+  unit            String // "Bình 20L", "Bình 12kg", "Bao 25kg", "Thùng 24 lon"
+  price           Float
+  stock           Int                   @default(0)
+  reservedStock   Int                   @default(0)
+  minStockAlert   Int                   @default(5)
+  imageUrl        String?
+  status          String                @default("ACTIVE") // ACTIVE, INACTIVE, OUT_OF_STOCK
+  isActive        Boolean               @default(true)
+  devices         Device[]
+  deviceConfigs   DeviceConfiguration[]
+  deviceTemplates DeviceTemplate[]
+  orderItems      OrderItem[]
+  createdAt       DateTime              @default(now())
+  updatedAt       DateTime              @updatedAt
 
   @@unique([storeId, sku])
 }
 
 model Device {
-  id              String               @id @default(uuid())
-  deviceId        String               @unique
-  serialNumber    String               @unique
-  deviceSecret    String
-  claimCode       String
-  qrPayload       String               @unique
-  firmwareVersion String               @default("1.0.0")
-  hardwareModel   String               @default("ESP32-WROOM-32E")
-  status          DeviceStatus         @default(UNCLAIMED)
-  storeId         String?
-  store           Store?               @relation(fields: [storeId], references: [id])
-  customerId      String?
-  customer        CustomerProfile?     @relation(fields: [customerId], references: [id])
-  batteryLevel    Int                  @default(100)
-  wifiRSSI        Int                  @default(-50)
-  lastSeenAt      DateTime?
-  configuration   DeviceConfiguration?
-  events          DeviceEvent[]
-  telemetries     DeviceTelemetry[]
-  orders          Order[]
-  createdAt       DateTime             @default(now())
-  updatedAt       DateTime             @updatedAt
+  id                  String                 @id @default(uuid())
+  deviceId            String                 @unique // e.g. "SOB-000001", "BTN-8829-WTR"
+  serialNumber        String                 @unique
+  macAddress          String?                @unique // e.g. "24:6F:28:AB:CD:01"
+  customName          String?                // e.g. "Water Button 01" / Alias "WATER-001"
+  deviceSecret        String // HMAC secret key
+  claimCode           String // e.g. "CLAIM-749201"
+  pairingCode         String?                // 6-digit numeric pairing code e.g. "882910"
+  pairingToken        String?                // Secure random pairing token for QR payload
+  qrPayload           String                 @unique // e.g. "SOBPAIR://setup?device=SOB-000001&token=XXXXXX&v=1"
+  firmwareVersion     String                 @default("1.0.0")
+  hardwareModel       String                 @default("ESP32-WROOM-32E")
+  status              String                 @default("READY_FOR_CUSTOMER") // MANUFACTURED, INVENTORY, ASSIGNED_TO_STORE, READY_FOR_CUSTOMER, PROVISIONING, WIFI_CONFIGURED, CLOUD_CONNECTED, CLAIMED, ACTIVE, DISABLED, REVOKED, TRANSFER_PENDING
+  claimStatus         String                 @default("UNCLAIMED") // UNCLAIMED, PENDING_CLAIM, CLAIMED, TRANSFERRED
+  provisioningStatus  String                 @default("UNPROVISIONED") // UNPROVISIONED, BLE_ADVERTISING, PROVISIONING, WIFI_CONFIGURED, CLOUD_CONNECTED, FAILED
+  ipAddress           String?                // Technical telemetry only
+  uptime              Int?                   // In seconds
+  storeId             String?
+  store               Store?                 @relation(fields: [storeId], references: [id])
+  productId           String?
+  product             Product?               @relation(fields: [productId], references: [id])
+  templateId          String?
+  template            DeviceTemplate?        @relation(fields: [templateId], references: [id])
+  location            String?                // e.g. "Kitchen B2", "Warehouse 1"
+  description         String?
+  customerId          String?
+  customer            CustomerProfile?       @relation(fields: [customerId], references: [id])
+  batteryLevel        Int                    @default(100)
+  wifiRSSI            Int                    @default(-50)
+  lastSeenAt          DateTime?
+  configuration       DeviceConfiguration?
+  pairingSessions     DevicePairingSession[]
+  auditLogsExtended   DeviceAuditLog[]
+  events              DeviceEvent[]
+  telemetries         DeviceTelemetry[]
+  orders              Order[]
+  createdAt           DateTime               @default(now())
+  updatedAt           DateTime               @updatedAt
+}
+
+model DevicePairingSession {
+  id         String           @id @default(uuid())
+  deviceId   String
+  device     Device           @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  tokenHash  String           @unique
+  customerId String?
+  customer   CustomerProfile? @relation(fields: [customerId], references: [id])
+  expiresAt  DateTime
+  usedAt     DateTime?
+  status     String           @default("ACTIVE") // ACTIVE, USED, EXPIRED, REVOKED
+  createdAt  DateTime         @default(now())
+}
+
+model DeviceAuditLog {
+  id        String   @id @default(uuid())
+  deviceId  String
+  device    Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  actorId   String?
+  action    String   // WIFI_CONFIGURED, BOOTSTRAP_SUCCESS, DEVICE_CLAIMED, DEVICE_UNCLAIMED, etc.
+  metadata  String?  // JSON metadata
+  createdAt DateTime @default(now())
+}
+
+model DeviceTemplate {
+  id                  String   @id @default(uuid())
+  name                String   // e.g. "WATER BUTTON", "LPG GAS BUTTON"
+  description         String?
+  category            String?  // "Water", "Gas", "Rice"
+  storeId             String?
+  store               Store?   @relation(fields: [storeId], references: [id])
+  defaultProductId    String?
+  defaultProduct      Product? @relation(fields: [defaultProductId], references: [id])
+  singlePressAction   String   @default("CREATE_ORDER")
+  doublePressAction   String   @default("CANCEL_ORDER")
+  longPressAction     String   @default("WIFI_CONFIGURATION")
+  defaultQuantity     Int      @default(1)
+  cancelWindowSeconds Int      @default(60)
+  devices             Device[]
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 }
 
 model DeviceConfiguration {
   id                    String   @id @default(uuid())
   deviceId              String   @unique
   device                Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
-  customName            String
+  customName            String // e.g. "Nút Nước Lavie Bếp"
   productId             String
   product               Product  @relation(fields: [productId], references: [id])
   defaultQuantity       Int      @default(1)
@@ -169,7 +221,7 @@ model DeviceEvent {
   id           String   @id @default(uuid())
   deviceId     String
   device       Device   @relation(fields: [deviceId], references: [id], onDelete: Cascade)
-  eventType    String
+  eventType    String // "SINGLE_PRESS", "DOUBLE_PRESS", "HOLD_5S", "LOW_BATTERY"
   requestId    String   @unique
   batteryLevel Int
   wifiRSSI     Int
@@ -193,15 +245,15 @@ model DeviceTelemetry {
 
 model Order {
   id                 String           @id @default(uuid())
-  orderNumber        String           @unique
+  orderNumber        String           @unique // e.g. "ORD-20260902-0041"
   storeId            String
   store              Store            @relation(fields: [storeId], references: [id])
   customerId         String
   customer           CustomerProfile  @relation(fields: [customerId], references: [id])
   deviceId           String?
   device             Device?          @relation(fields: [deviceId], references: [id])
-  status             OrderStatus      @default(PENDING)
-  totalAmount        Decimal          @db.Decimal(12, 2)
+  status             String           @default("PENDING") // PENDING, CONFIRMED, PREPARING, OUT_FOR_DELIVERY, COMPLETED, CANCELLED, REJECTED
+  totalAmount        Float
   deliveryAddress    String
   customerPhone      String
   customerName       String
@@ -221,8 +273,8 @@ model OrderItem {
   product     Product  @relation(fields: [productId], references: [id])
   productName String
   quantity    Int
-  unitPrice   Decimal  @db.Decimal(12, 2)
-  totalPrice  Decimal  @db.Decimal(12, 2)
+  unitPrice   Float
+  totalPrice  Float
 }
 
 model IdempotencyRecord {
